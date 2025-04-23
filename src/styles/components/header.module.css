@@ -8,11 +8,11 @@
 
   padding: 15px;
 
-  > p {
+  & > p {
     font-size: 1.2rem;
   }
 
-  .pokemon-info {
+  & .pokemon-info {
     display: flex;
     align-items: center;
     gap: 5px;

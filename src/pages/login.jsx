@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { isUserValid, welcomeGuest } from "@/lib/auth";
+import { useState } from "react";
+import { users } from "@/lib/users";
 import loginImage from "@/assets/images/log-in-image.png";
 import styles from "@/pages/login.module.css";
 
@@ -7,60 +7,84 @@ export default function Login() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleNameChange({ target }) {
-    const regex = /^[A-Za-z0-9]*$/;
-    if (regex.test(target.value)) setName(target.value);
-  }
-
-  function handlePasswordChange({ target }) {
-    setPassword(target.value);
-  }
-
-  function checkInputs() {
-    isUserValid({ name, password });
-  }
-
-  function joinAsGuess() {
-    welcomeGuest();
-  }
-
   return (
-    <main className={styles.main}>
+    <div className={styles["form-wrapper"]}>
       <form onSubmit={(e) => e.preventDefault()}>
         <img src={loginImage.src} alt="log-in" />
         <h1>Log in to your pokemon account</h1>
         <section className={styles["user-data"]}>
-          <label for={"username-input"}>
+          <label htmlFor={"username-input"}>
             Username
             <input
               value={name}
-              onChange={handleNameChange}
-              type={"text"}
-              id={"username-input"}
+              onChange={(e) => {
+                const regex = /^[A-Za-z0-9]*$/;
+                if (regex.test(e.target.value)) setName(e.target.value);
+              }}
+              type="text"
+              id="username-input"
               required
             />
           </label>
 
-          <label for={"password-input"}>
+          <label htmlFor="password-input">
             Password
             <input
               value={password}
-              onChange={handlePasswordChange}
-              type={"password"}
-              id={"password-input"}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              type="password"
+              id="password-input"
               required
             />
           </label>
         </section>
         <div className={styles.buttons}>
-          <button type={"submit"} name={"input-text"} onClick={checkInputs}>
+          <button
+            type="submit"
+            name="input-text"
+            onClick={() => {
+              if (!name) {
+                alert("No username inserted!");
+                return false;
+              }
+
+              if (!password) {
+                alert("No password inserted!");
+                return false;
+              }
+
+              const currentUser = users.find(
+                ({ username }) => username === name
+              );
+              if (!currentUser) {
+                alert("Couldn't find username, try a different one!");
+                return false;
+              }
+
+              if (password !== currentUser.password) {
+                alert("Username and password do not match!");
+                return false;
+              }
+
+              alert(`Welcome back ${name}!`);
+              return true;
+            }}
+          >
             Log in
           </button>
-          <button type={"submit"} name={"input-text"} onClick={joinAsGuess}>
+          <button
+            type="submit"
+            name="input-text"
+            onClick={() => {
+              alert("Welcome Mr.Mysterious!");
+            }}
+          >
             Join as guest
           </button>
         </div>
       </form>
-    </main>
+    </div>
   );
 }
