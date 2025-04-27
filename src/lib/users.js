@@ -1,18 +1,18 @@
 export const users = [
   {
-    username: "noder",
+    userName: "noder",
     password: "8880",
   },
   {
-    username: "neder",
+    userName: "neder",
     password: "8880",
   },
   {
-    username: "adawddd",
+    userName: "adawddd",
     password: "8880",
   },
   {
-    username: "adawd",
+    userName: "adawd",
     password: "8880",
   },
 ];

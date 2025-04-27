@@ -8,6 +8,7 @@ export default function Header() {
         <img src={pokemonLogo.src} alt={"pokemon-logo"} />
         <p>Pok`emon</p>
       </div>
+
       <p>{new Date().toLocaleDateString("he-IL")}</p>
     </header>
   );

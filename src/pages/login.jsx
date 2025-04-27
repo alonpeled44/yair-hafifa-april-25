@@ -4,7 +4,7 @@ import loginImage from "@/assets/images/log-in-image.png";
 import styles from "@/pages/login.module.css";
 
 export default function Login() {
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   return (
@@ -12,14 +12,15 @@ export default function Login() {
       <form onSubmit={(e) => e.preventDefault()}>
         <img src={loginImage.src} alt="log-in" />
         <h1>Log in to your pokemon account</h1>
+
         <section className={styles["user-data"]}>
-          <label htmlFor={"username-input"}>
+          <label htmlFor="username-input">
             Username
             <input
-              value={name}
+              value={username}
               onChange={(e) => {
                 const regex = /^[A-Za-z0-9]*$/;
-                if (regex.test(e.target.value)) setName(e.target.value);
+                if (regex.test(e.target.value)) setUsername(e.target.value);
               }}
               type="text"
               id="username-input"
@@ -40,12 +41,13 @@ export default function Login() {
             />
           </label>
         </section>
+
         <div className={styles.buttons}>
           <button
             type="submit"
             name="input-text"
             onClick={() => {
-              if (!name) {
+              if (!username) {
                 alert("No username inserted!");
                 return false;
               }
@@ -56,7 +58,7 @@ export default function Login() {
               }
 
               const currentUser = users.find(
-                ({ username }) => username === name
+                ({ userName }) => userName === username
               );
               if (!currentUser) {
                 alert("Couldn't find username, try a different one!");
@@ -68,7 +70,7 @@ export default function Login() {
                 return false;
               }
 
-              alert(`Welcome back ${name}!`);
+              alert(`Welcome back ${username}!`);
               return true;
             }}
           >
