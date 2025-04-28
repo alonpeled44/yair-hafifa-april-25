@@ -1,18 +1,18 @@
-import Header from "@/components/header";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { users } from "@/lib/users";
+import Header from "@/components/header";
 import "@/styles/globals.css";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
 
   useEffect(() => {
-    const localStoredUsername = localStorage.getItem("username");
+    const savedUsername = localStorage.getItem("username");
     const currentUser = users.find(
-      ({ userName }) => userName === localStoredUsername
+      ({ userName }) => userName === savedUsername
     );
-    if (currentUser || localStoredUsername === "Guest") {
+    if (currentUser || savedUsername === "Guest") {
       router.push("/");
     } else {
       router.push("/login");

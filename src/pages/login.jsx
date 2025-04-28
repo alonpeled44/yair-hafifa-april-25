@@ -8,6 +8,8 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [loginError, setLoginError] = useState("");
+
   const router = useRouter();
 
   return (
@@ -43,6 +45,7 @@ export default function Login() {
               required
             />
           </label>
+          <p>{loginError}</p>
         </section>
 
         <div className={styles.buttons}>
@@ -51,12 +54,12 @@ export default function Login() {
             name="input-text"
             onClick={() => {
               if (!username) {
-                alert("No username inserted!");
+                setLoginError("No username inserted");
                 return false;
               }
 
               if (!password) {
-                alert("No password inserted!");
+                setLoginError("No password inserted");
                 return false;
               }
 
@@ -64,12 +67,12 @@ export default function Login() {
                 ({ userName }) => userName === username
               );
               if (!currentUser) {
-                alert("Couldn't find username, try a different one!");
+                setLoginError("Couldn't find username, try a different one");
                 return false;
               }
 
               if (password !== currentUser.password) {
-                alert("Username and password do not match!");
+                setLoginError("Username and password do not match");
                 return false;
               }
 
