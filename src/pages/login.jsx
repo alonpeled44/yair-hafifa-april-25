@@ -76,6 +76,8 @@ export default function Login() {
                 return false;
               }
 
+              setLoginError("");
+
               localStorage.setItem("username", currentUser.userName);
               router.push("/");
               return true;
@@ -87,6 +89,8 @@ export default function Login() {
             type="submit"
             name="input-text"
             onClick={() => {
+              setLoginError("");
+
               localStorage.setItem("username", "Guest");
               router.push("/");
             }}
