@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { users } from "@/lib/users";
 import loginImage from "@/assets/images/log-in-image.png";
 import styles from "@/pages/login.module.css";
@@ -6,6 +7,8 @@ import styles from "@/pages/login.module.css";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const router = useRouter();
 
   return (
     <div className={styles["form-wrapper"]}>
@@ -70,7 +73,8 @@ export default function Login() {
                 return false;
               }
 
-              alert(`Welcome back ${username}!`);
+              localStorage.setItem("username", currentUser.userName);
+              router.push("/");
               return true;
             }}
           >
@@ -80,7 +84,8 @@ export default function Login() {
             type="submit"
             name="input-text"
             onClick={() => {
-              alert("Welcome Mr.Mysterious!");
+              localStorage.setItem("username", "Guest");
+              router.push("/");
             }}
           >
             Join as guest
