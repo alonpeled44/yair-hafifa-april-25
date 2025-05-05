@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import ContentSplit from "@/components/contentSplit";
 import pokemonLogo from "@/assets/images/pokemon-logo.png";
 import styles from "@/styles/components/header.module.css";
 
@@ -16,6 +17,7 @@ export default function Header() {
       <div className={styles["pokemon-info"]}>
         <img src={pokemonLogo.src} alt={"pokemon-logo"} />
         <p>Pok`emon</p>
+        <ContentSplit />
         {username && (
           <div className={styles["header-items"]}>
             <p>{username}</p>
