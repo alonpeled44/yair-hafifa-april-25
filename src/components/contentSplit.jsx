@@ -5,8 +5,7 @@ export default function ContentSplit() {
         width: "3px",
         background: "black",
         alignSelf: "stretch",
-        marginTop: "5px",
-        marginBottom: "5px",
+        marginBlock: "5px",
       }}
     ></div>
   );
