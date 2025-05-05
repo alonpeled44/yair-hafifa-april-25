@@ -1,10 +1,16 @@
-import { useUserName } from "@/contexts/UserNameProvider";
-import ContentSplit from "@/components/contentSplit";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import VerticalDivider from "@/components/verticalDivider";
 import pokemonLogo from "@/assets/images/pokemon-logo.png";
 import styles from "@/styles/components/header.module.css";
 
 export default function Header() {
-  const username = useUserName();
+  const [username, setUsername] = useState("");
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setUsername(localStorage.getItem("username"));
+  }, [pathname]);
 
   return (
     <header className={styles.header}>
@@ -13,7 +19,7 @@ export default function Header() {
         <p>Pok`emon</p>
         {username && (
           <>
-            <ContentSplit />
+            <VerticalDivider />
             <div className={styles["header-items"]}>
               <p>{username}</p>
               <button>Log out</button>

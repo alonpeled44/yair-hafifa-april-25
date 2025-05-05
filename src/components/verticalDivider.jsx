@@ -1,4 +1,4 @@
-export default function ContentSplit() {
+export default function VerticalDivider() {
   return (
     <div
       style={{

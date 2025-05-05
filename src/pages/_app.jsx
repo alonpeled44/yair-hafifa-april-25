@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import WindowWidthProvider from "@/contexts/WindowWidthProvider";
-import UserNameProvider from "@/contexts/UserNameProvider";
 import { users } from "@/lib/users";
 import Header from "@/components/header";
 import "@/styles/globals.css";
@@ -21,12 +20,10 @@ export default function App({ Component, pageProps }) {
 
   return (
     <WindowWidthProvider>
-      <UserNameProvider>
-        <Header />
-        <main>
-          <Component {...pageProps} />
-        </main>
-      </UserNameProvider>
+      <Header />
+      <main>
+        <Component {...pageProps} />
+      </main>
     </WindowWidthProvider>
   );
 }
