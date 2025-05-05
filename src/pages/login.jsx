@@ -1,22 +1,38 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { users } from "@/lib/users";
+import windowWidthProvider, {
+  UserContext,
+} from "@/contexts/WindowWidthProvider";
 import loginImage from "@/assets/images/log-in-image.png";
-import styles from "@/pages/login.module.css";
+import styles from "@/styles/pages/login.module.css";
+import { useWindowWidth } from "@/contexts/WindowWidthProvider";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const windowWidth = useWindowWidth();
+
+  const [showHeader, setShowHeader] = useState(true);
+
   const [loginError, setLoginError] = useState("");
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (windowWidth >= 480) {
+      setShowHeader(true);
+    } else {
+      setShowHeader(false);
+    }
+  }, [windowWidth]);
 
   return (
     <div className={styles["form-wrapper"]}>
       <form onSubmit={(e) => e.preventDefault()}>
         <img src={loginImage.src} alt="log-in" />
-        <h1>Log in to your pokemon account</h1>
+        {showHeader && <h1>Log in to your pokemon account</h1>}
 
         <section className={styles["user-data"]}>
           <label htmlFor="username-input">
