@@ -11,8 +11,6 @@ export default function Header() {
     setUsername(localStorage.getItem("username"));
   }, [pathname]);
 
-  useEffect(() => {});
-
   return (
     <header className={styles.header}>
       <div className={styles["pokemon-info"]}>
