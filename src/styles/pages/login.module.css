@@ -116,8 +116,7 @@
           width: fit-content;
 
           padding: 10px;
-          padding-left: 30px;
-          padding-right: 30px;
+          padding-inline: 30px;
 
           font-size: 1rem;
         }

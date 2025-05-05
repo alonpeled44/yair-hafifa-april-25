@@ -7,11 +7,8 @@ export default function Header() {
   const [username, setUsername] = useState("");
   const pathname = usePathname();
 
-  var visibility = false;
-
   useEffect(() => {
     setUsername(localStorage.getItem("username"));
-    visibility = true;
   }, [pathname]);
 
   useEffect(() => {});

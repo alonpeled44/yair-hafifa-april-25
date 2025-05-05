@@ -13,11 +13,8 @@ export default function App({ Component, pageProps }) {
     const currentUser = users.find(
       ({ userName }) => userName === savedUsername
     );
-    if (currentUser || savedUsername === "Guest") {
-      router.push("/");
-    } else {
-      router.push("/login");
-    }
+    if (currentUser || savedUsername === "Guest") router.push("/");
+    else router.push("/login");
   }, []);
 
   return (

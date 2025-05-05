@@ -14,25 +14,15 @@ export default function Login() {
 
   const windowWidth = useWindowWidth();
 
-  const [showHeader, setShowHeader] = useState(true);
-
   const [loginError, setLoginError] = useState("");
 
   const router = useRouter();
-
-  useEffect(() => {
-    if (windowWidth >= 480) {
-      setShowHeader(true);
-    } else {
-      setShowHeader(false);
-    }
-  }, [windowWidth]);
 
   return (
     <div className={styles["form-wrapper"]}>
       <form onSubmit={(e) => e.preventDefault()}>
         <img src={loginImage.src} alt="log-in" />
-        {showHeader && <h1>Log in to your pokemon account</h1>}
+        {windowWidth >= 480 && <h1>Log in to your pokemon account</h1>}
 
         <section className={styles["user-data"]}>
           <label htmlFor="username-input">
@@ -61,7 +51,7 @@ export default function Login() {
               required
             />
           </label>
-          <p>{loginError}</p>
+          {loginError && <p>{loginError}</p>}
         </section>
 
         <div className={styles.buttons}>
@@ -71,12 +61,12 @@ export default function Login() {
             onClick={() => {
               if (!username) {
                 setLoginError("No username inserted");
-                return false;
+                return;
               }
 
               if (!password) {
                 setLoginError("No password inserted");
-                return false;
+                return;
               }
 
               const currentUser = users.find(
@@ -84,12 +74,12 @@ export default function Login() {
               );
               if (!currentUser) {
                 setLoginError("Couldn't find username, try a different one");
-                return false;
+                return;
               }
 
               if (password !== currentUser.password) {
                 setLoginError("Username and password do not match");
-                return false;
+                return;
               }
 
               setLoginError("");
