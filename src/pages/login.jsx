@@ -86,7 +86,6 @@ export default function Login() {
 
               localStorage.setItem("username", currentUser.userName);
               router.push("/");
-              return true;
             }}
           >
             Log in
