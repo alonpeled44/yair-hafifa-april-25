@@ -5,11 +5,11 @@ import VerticalDivider from "@/components/VerticalDivider";
 import pokemonLogo from "@/assets/images/pokemon-logo.png";
 import styles from "@/styles/components/header.module.css";
 
-export default function Header() {
+export default function Header({ newUsersDefaultPage }) {
   const [username, setUsername] = useState("");
   const pathname = usePathname();
 
-  const router = useRouter(props);
+  const router = useRouter();
 
   useEffect(() => {
     setUsername(localStorage.getItem("username"));
@@ -28,7 +28,7 @@ export default function Header() {
               <button
                 onClick={() => {
                   localStorage.removeItem("username");
-                  router.push(props.newUsersDefaultPage);
+                  router.push(newUsersDefaultPage);
                 }}
               >
                 Log out
