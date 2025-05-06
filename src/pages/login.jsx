@@ -1,17 +1,25 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { useWindowWidth } from "@/contexts/WindowWidthProvider";
 import { users } from "@/lib/users";
 import loginImage from "@/assets/images/log-in-image.png";
-import styles from "@/pages/login.module.css";
+import styles from "@/styles/pages/login.module.css";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const windowWidth = useWindowWidth();
+
+  const [loginError, setLoginError] = useState("");
+
+  const router = useRouter();
+
   return (
     <div className={styles["form-wrapper"]}>
       <form onSubmit={(e) => e.preventDefault()}>
         <img src={loginImage.src} alt="log-in" />
-        <h1>Log in to your pokemon account</h1>
+        {windowWidth >= 480 && <h1>Log in to your pokemon account</h1>}
 
         <section className={styles["user-data"]}>
           <label htmlFor="username-input">
@@ -40,6 +48,7 @@ export default function Login() {
               required
             />
           </label>
+          {loginError && <p>{loginError}</p>}
         </section>
 
         <div className={styles.buttons}>
@@ -48,30 +57,32 @@ export default function Login() {
             name="input-text"
             onClick={() => {
               if (!username) {
-                alert("No username inserted!");
-                return false;
+                setLoginError("No username inserted");
+                return;
               }
 
               if (!password) {
-                alert("No password inserted!");
-                return false;
+                setLoginError("No password inserted");
+                return;
               }
 
               const currentUser = users.find(
                 ({ userName }) => userName === username
               );
               if (!currentUser) {
-                alert("Couldn't find username, try a different one!");
-                return false;
+                setLoginError("Couldn't find username, try a different one");
+                return;
               }
 
               if (password !== currentUser.password) {
-                alert("Username and password do not match!");
-                return false;
+                setLoginError("Username and password do not match");
+                return;
               }
 
-              alert(`Welcome back ${username}!`);
-              return true;
+              setLoginError("");
+
+              localStorage.setItem("username", currentUser.userName);
+              router.push("/");
             }}
           >
             Log in
@@ -80,7 +91,10 @@ export default function Login() {
             type="submit"
             name="input-text"
             onClick={() => {
-              alert("Welcome Mr.Mysterious!");
+              setLoginError("");
+
+              localStorage.setItem("username", "Guest");
+              router.push("/");
             }}
           >
             Join as guest

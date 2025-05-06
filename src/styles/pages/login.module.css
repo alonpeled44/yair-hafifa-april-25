@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
 
-  background-image: url("../assets//images/pikachu.png");
+  background-image: url("../../assets/images/pikachu.png");
   background-repeat: repeat;
 
   & button {
@@ -63,6 +63,10 @@
           background-color: rgb(49, 49, 49);
         }
       }
+
+      & > p {
+        color: rgb(255, 0, 0);
+      }
     }
 
     & .buttons {
@@ -73,12 +77,49 @@
         width: 200px;
         height: 40px;
 
-        color: rgb(240, 240, 240);
-        background-color: rgb(77, 173, 91);
-        border: none;
-        border-radius: 4px;
         font-weight: 800;
         font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .form-wrapper {
+    & form {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+
+      gap: 85px;
+
+      border-radius: 0;
+      background-color: rgb(255, 255, 255);
+      box-shadow: none;
+
+      & .user-data {
+        & label {
+          font-size: 1.8rem;
+
+          & input {
+            width: 270px;
+            height: 35px;
+          }
+        }
+      }
+
+      & .buttons {
+        flex-direction: column;
+        align-items: center;
+
+        & button {
+          width: fit-content;
+
+          padding: 10px;
+          padding-inline: 30px;
+
+          font-size: 1rem;
+        }
       }
     }
   }
