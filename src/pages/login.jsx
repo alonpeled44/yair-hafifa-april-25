@@ -4,7 +4,6 @@ import { useWindowWidth } from "@/contexts/WindowWidthProvider";
 import { users } from "@/lib/users";
 import loginImage from "@/assets/images/log-in-image.png";
 import styles from "@/styles/pages/login.module.css";
-import styles from "@/styles/pages/login.module.css";
 
 export default function Login() {
   const [username, setUsername] = useState("");

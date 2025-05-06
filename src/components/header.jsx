@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import VerticalDivider from "@/components/verticalDivider";
+import VerticalDivider from "@/components/VerticalDivider";
 import pokemonLogo from "@/assets/images/pokemon-logo.png";
 import styles from "@/styles/components/header.module.css";
 

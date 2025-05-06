@@ -1,12 +1,5 @@
+import styles from "@/styles/components/verticalDivider.module.css";
+
 export default function VerticalDivider() {
-  return (
-    <div
-      style={{
-        width: "3px",
-        background: "black",
-        alignSelf: "stretch",
-        marginBlock: "5px",
-      }}
-    ></div>
-  );
+  return <div className={styles["vertical-divider"]}></div>;
 }

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import WindowWidthProvider from "@/contexts/WindowWidthProvider";
 import { users } from "@/lib/users";
-import Header from "@/components/header";
+import Header from "@/components/Header";
 import "@/styles/globals.css";
 
 export default function App({ Component, pageProps }) {

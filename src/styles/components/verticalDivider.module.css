@@ -1,0 +1,8 @@
+.vertical-divider {
+  align-self: stretch;
+  width: 3px;
+
+  margin-block: 5px;
+
+  background-color: black;
+}
