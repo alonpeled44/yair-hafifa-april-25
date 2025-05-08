@@ -26,8 +26,9 @@ export default function Header() {
             </div>
           </>
         )}
+
         <VerticalDivider />
-        <a href="http://localhost:3000/">PokeDex</a>
+        <a href="/">PokeDex</a>
       </div>
 
       <p>{new Date().toLocaleDateString("he-IL")}</p>
