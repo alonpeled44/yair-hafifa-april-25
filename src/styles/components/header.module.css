@@ -9,7 +9,7 @@
   padding: 15px;
 
   & > p {
-    font-size: 1.2rem;
+    font-size: 1.2em;
   }
 
   & .pokemon-info {
@@ -28,11 +28,12 @@
 
     & p {
       font-family: pokemon-font;
-      font-size: 1.2rem;
+      font-size: 1.2em;
     }
 
     & .header-items {
       display: flex;
+      align-items: center;
       gap: 8px;
 
       & > button {
@@ -40,5 +41,13 @@
         height: 22px;
       }
     }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .header {
+    padding: 0px;
+
+    font-size: 0.8rem;
   }
 }
