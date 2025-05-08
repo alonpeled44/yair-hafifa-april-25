@@ -36,6 +36,9 @@ export default function Header({ newUsersDefaultPage }) {
             </div>
           </>
         )}
+
+        <VerticalDivider />
+        <a href="/">PokeDex</a>
       </div>
 
       <p>{new Date().toLocaleDateString("he-IL")}</p>
