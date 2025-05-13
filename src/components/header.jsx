@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import VerticalDivider from "@/components/VerticalDivider";
 import pokemonLogo from "@/assets/images/pokemon-logo.png";
 import styles from "@/styles/components/header.module.css";
@@ -34,11 +35,12 @@ export default function Header({ newUsersDefaultPage }) {
                 Log out
               </button>
             </div>
+
+            <VerticalDivider />
+
+            <Link href="/">PokeDex</Link>
           </>
         )}
-
-        <VerticalDivider />
-        <a href="/">PokeDex</a>
       </div>
 
       <p>{new Date().toLocaleDateString("he-IL")}</p>
