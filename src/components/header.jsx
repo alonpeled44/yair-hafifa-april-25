@@ -35,7 +35,9 @@ export default function Header({ newUsersDefaultPage }) {
                 Log out
               </button>
             </div>
+
             <VerticalDivider />
+
             <Link href="/">PokeDex</Link>
           </>
         )}
