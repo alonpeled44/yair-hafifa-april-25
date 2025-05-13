@@ -23,12 +23,11 @@ export default function Home() {
   useEffect(() => {
     let clickHandler = null;
     if (selectedPokemon) {
-      console.log("dfsd");
       clickHandler = (event) => {
         const dialog = dialogRef.current;
         const contentWrapper = contentWrapperRef.current;
         /*I finally found the issue without the AI the problem is the I tried to check if the dialog is open "dialog.open" instead of
-        wether the click is inside the dialog which makes more sense */
+        weather the click is inside the dialog which makes more sense */
         if (
           event.target === dialog &&
           contentWrapper &&
