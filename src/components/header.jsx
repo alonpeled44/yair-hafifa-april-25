@@ -35,11 +35,10 @@ export default function Header({ newUsersDefaultPage }) {
                 Log out
               </button>
             </div>
+            <VerticalDivider />
+            <Link href="/">PokeDex</Link>
           </>
         )}
-
-        <VerticalDivider />
-        <Link href="/">PokeDex</Link>
       </div>
 
       <p>{new Date().toLocaleDateString("he-IL")}</p>
