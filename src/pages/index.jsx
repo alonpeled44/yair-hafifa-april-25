@@ -91,9 +91,7 @@ export default function Home() {
         <dialog
           ref={dialogRef}
           className={styles["pokemon-info-dialog"]}
-          // Add a direct click handler to the dialog element
           onClick={(e) => {
-            // If click is directly on the dialog (backdrop) and not on its content
             if (e.target === dialogRef.current) {
               setSelectedPokemon(null);
             }
