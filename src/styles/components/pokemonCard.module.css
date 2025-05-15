@@ -11,4 +11,8 @@
   cursor: pointer;
 
   background-image: url("../../assets/images/PokemonCardBackground.jpg");
+
+  & h1 {
+    font-size: 0.9rem;
+  }
 }

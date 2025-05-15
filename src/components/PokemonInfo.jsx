@@ -17,32 +17,30 @@ export default function PokemonInfo({
   return (
     <div className={styles["pokemon-info"]}>
       <div className={styles["dialog-header"]}>
-        <p>{name}</p>
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              onClick={() => setIsShiny((prev) => !prev)}
-            ></input>
-            shiny
-          </label>
-          <p>#{id}</p>
-        </div>
+        <p id={styles["pokemon-name"]}>{name}</p>
+        <label>
+          <input
+            type="checkbox"
+            onClick={() => setIsShiny((prev) => !prev)}
+          ></input>
+          shiny
+        </label>
+        <p>#{id}</p>
       </div>
 
       <div className={styles["pokemon-info-main"]}>
-        <div className={styles["pokemon-img-container"]}>
+        <div className={styles["images"]}>
           <img
             src={!isShiny ? frontViewImageUrl : frontShinyViewImageUrl}
             alt="pokemon image"
-          ></img>
+          />
           <img
             src={!isShiny ? backViewImageUrl : backShinyViewImageUrl}
             alt="pokemon's back image"
-          ></img>
+          />
         </div>
 
-        <div className="pokemon-data">
+        <div className={styles["pokemon-data"]}>
           <p>type: {type}</p>
           <p>weight: {weight}</p>
           <p>height: {height}</p>

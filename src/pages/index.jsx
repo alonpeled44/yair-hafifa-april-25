@@ -1,11 +1,14 @@
 import { useState, useRef, useEffect } from "react";
+import { pokemons } from "@/lib/pokemons";
 import PokemonCard from "@/components/PokemonCard";
 import PokemonInfo from "@/components/PokemonInfo";
-import { pokemons } from "@/lib/pokemons";
+import Modal from "@/components/Modal";
 import styles from "@/styles/pages/index.module.css";
 
 export default function Home() {
   const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [modalIsOpen, modalSetIsOpen] = useState(false);
+  const [isShiny, setIsShiny] = useState(false);
 
   const dialogRef = useRef(null);
   const contentWrapperRef = useRef(null);
@@ -21,38 +24,20 @@ export default function Home() {
   }, [selectedPokemon]);
 
   useEffect(() => {
-    let clickHandler = null;
-    if (selectedPokemon) {
-      clickHandler = (event) => {
-        const dialog = dialogRef.current;
-        const contentWrapper = contentWrapperRef.current;
-        /*I finally found the issue without the AI the problem is the I tried to check if the dialog is open "dialog.open" instead of
-        weather the click is inside the dialog which makes more sense */
-        if (
-          event.target === dialog &&
-          contentWrapper &&
-          !contentWrapper.contains(event.target)
-        ) {
-          setSelectedPokemon(null);
-        }
-      };
-
-      document.addEventListener("click", clickHandler);
-    }
-    return () => {
-      document.removeEventListener("click", clickHandler);
-    };
+    modalSetIsOpen(selectedPokemon !== null);
+    console.log(selectedPokemon);
   }, [selectedPokemon]);
 
   return (
-    <div className={styles["pokemon-container-wrapper"]}>
+    <div className={styles["pokedex-wrapper"]}>
       <div className={styles["pokemon-cards-container"]}>
-        <section className={styles["pokemon-cards-header"]}>
+        <section className={styles["filter-and-sort-cards"]}>
           <input
             type="text"
             placeholder="Search card"
             className={styles["search-bar"]}
           />
+
           <div className={styles["cards-preview-settings"]}>
             <select>
               <option value="volvo">Volvo</option>
@@ -60,6 +45,7 @@ export default function Home() {
               <option value="mercedes">Mercedes</option>
               <option value="audi">Audi</option>
             </select>
+
             <select>
               <option value="volvo">Volvo</option>
               <option value="saab">Saab</option>
@@ -86,41 +72,49 @@ export default function Home() {
         </section>
       </div>
 
-      {selectedPokemon && (
-        <dialog
-          ref={dialogRef}
-          className={styles["pokemon-info-dialog"]}
-          onClick={(e) => {
-            if (e.target === dialogRef.current) {
-              setSelectedPokemon(null);
-            }
-          }}
-        >
-          <div
-            ref={contentWrapperRef}
-            className={styles["dialog-content-wrapper"]}
-          >
-            <button
-              onClick={() => {
-                setSelectedPokemon(null);
-              }}
-            >
-              <p>&times;</p>
-            </button>
+      {modalIsOpen && (
+        <Modal isOpen={modalIsOpen} setIsOpen={modalSetIsOpen}>
+          <div className={styles["modal-content-wrapper"]}>
+            <div className={styles["modal-header"]}>
+              <p id={styles["pokemon-name"]}>{selectedPokemon.name}</p>
+              <label>
+                <input
+                  type="checkbox"
+                  onClick={() => setIsShiny((prev) => !prev)}
+                ></input>
+                shiny
+              </label>
+              <p>#{selectedPokemon.id}</p>
+            </div>
 
-            <PokemonInfo
-              id={selectedPokemon.id}
-              name={selectedPokemon.name}
-              frontViewImageUrl={selectedPokemon.frontViewImageUrl}
-              backViewImageUrl={selectedPokemon.frontViewImageUrl}
-              frontShinyViewImageUrl={selectedPokemon.frontShinyViewImageUrl}
-              backShinyViewImageUrl={selectedPokemon.backShinyViewImageUrl}
-              type={selectedPokemon.type}
-              weight={selectedPokemon.weight}
-              height={selectedPokemon.height}
-            />
+            <div className={styles["modal-main"]}>
+              <div className={styles["images"]}>
+                <img
+                  src={
+                    !isShiny
+                      ? selectedPokemon.frontViewImageUrl
+                      : selectedPokemon.frontShinyViewImageUrl
+                  }
+                  alt="pokemon image"
+                />
+                <img
+                  src={
+                    !isShiny
+                      ? selectedPokemon.frontViewImageUrl
+                      : selectedPokemon.backShinyViewImageUrl
+                  }
+                  alt="pokemon's back image"
+                />
+              </div>
+
+              <div className={styles["pokemon-data"]}>
+                <p>type: {selectedPokemon.type}</p>
+                <p>weight: {selectedPokemon.weight}</p>
+                <p>height: {selectedPokemon.height}</p>
+              </div>
+            </div>
           </div>
-        </dialog>
+        </Modal>
       )}
     </div>
   );
