@@ -12,6 +12,8 @@
     cursor: pointer;
   }
 
+  padding-top: 80px;
+
   & form {
     width: 620px;
     height: 80%;
