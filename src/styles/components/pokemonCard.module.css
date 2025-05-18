@@ -1,9 +1,6 @@
 .pokemon-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
 
   border: solid 2px rgb(0, 0, 0);
   border-radius: 5px;
@@ -12,7 +9,32 @@
 
   background-image: url("../../assets/images/PokemonCardBackground.jpg");
 
-  & h1 {
-    font-size: 0.9rem;
+  .card-header {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    & h1 {
+      font-size: 0.9rem;
+    }
+  }
+
+  .card-main {
+    height: 0px;
+    flex: 1 1 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    & img {
+      max-width: 100px;
+      max-height: 150px;
+
+      width: 70%;
+      height: 100%;
+    }
   }
 }

@@ -3,73 +3,63 @@
   flex: 1 1 auto;
 
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 50px;
+
+  padding-inline: 10%;
 
   background-image: url("../../assets/images/charmander.jpg");
 
-  & .pokemon-cards-header,
-  & .pokemon-cards {
-    width: 85%;
-  }
-
-  & .pokemon-card-organizer {
-    width: 100%;
-    height: 50px;
-
-    display: flex;
-    justify-content: space-between;
-
-    padding-inline: 100px;
-
-    & .search-bar,
-    & .cards-preview-settings select {
-      height: 35px;
-    }
-
-    & .search-bar {
-      width: 200px;
-
-      padding-inline: 10px;
-
-      border: none;
-      border-radius: 20px;
-      outline: none;
-
-      border-bottom: solid 2px rgb(0, 0, 0);
-    }
-
-    &::placeholder {
-      color: rgb(212, 212, 212);
-      font-size: 1rem;
-    }
-
-    & .cards-preview-settings {
-      display: flex;
-      gap: 12px;
-
-      & select {
-        width: 110px;
-
-        color: rgb(0, 0, 0);
-        background-color: rgb(255, 255, 255);
-        border: solid 1px rgb(0, 0, 0);
-        border-radius: 20px;
-      }
-    }
-  }
-
   & .pokemon-cards-container {
-    width: 90%;
-    height: 100%;
+    width: 0px;
+    flex: 1 1 auto;
 
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 50px;
 
     padding-top: 60px;
+
+    & .pokemon-card-organizer {
+      width: 100%;
+
+      display: flex;
+      justify-content: space-between;
+
+      & .search-bar,
+      & .cards-preview-settings select {
+        height: 35px;
+      }
+
+      & .search-bar {
+        width: 200px;
+
+        padding-inline: 10px;
+
+        border: none;
+        border-radius: 20px;
+        outline: none;
+
+        border-bottom: solid 2px rgb(0, 0, 0);
+      }
+
+      &::placeholder {
+        color: rgb(212, 212, 212);
+        font-size: 1rem;
+      }
+
+      & .cards-preview-settings {
+        display: flex;
+        gap: 12px;
+
+        & select {
+          width: 110px;
+
+          color: rgb(0, 0, 0);
+          background-color: rgb(255, 255, 255);
+          border: solid 1px rgb(0, 0, 0);
+          border-radius: 20px;
+        }
+      }
+    }
 
     & .pokemon-cards {
       height: 0px;
@@ -78,16 +68,11 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       grid-auto-rows: minmax(220px, auto);
-      grid-column-gap: clamp(0.5rem, 5vw, 3rem);
+      grid-column-gap: clamp(0.2rem, 2vw, 3rem);
       justify-content: space-evenly;
       grid-row-gap: 20px;
 
       overflow-y: auto;
-
-      & img {
-        width: 60%;
-        aspect-ratio: 1/1;
-      }
     }
   }
 
@@ -151,39 +136,34 @@
 }
 
 @media only screen and (max-width: 480px) {
-  .pokemon-cards-container {
-    & .pokemon-card-organizer {
-      padding-inline: 0px;
+  .pokedex-wrapper {
+    padding: 5px;
+    & .pokemon-cards-container {
+      & .pokemon-card-organizer {
+        & .search-bar,
+        & .cards-preview-settings select {
+          height: 30px;
+        }
 
-      & .search-bar,
-      & .cards-preview-settings select {
-        height: 30px;
-      }
+        & .search-bar {
+          width: 130px;
+        }
 
-      & .search-bar {
-        width: 150px;
-      }
+        & ::placeholder {
+          color: rgb(212, 212, 212);
+          font-size: 1rem;
+        }
 
-      & ::placeholder {
-        color: rgb(212, 212, 212);
-        font-size: 1rem;
-      }
-
-      & .cards-preview-settings {
-        & select {
-          width: 80px;
+        & .cards-preview-settings {
+          & select {
+            width: 60px;
+          }
         }
       }
-    }
-  }
-
-  & .pokedex-wrapper {
-    & .pokemon-cards-container {
-      padding-top: 20px;
 
       & .pokemon-cards {
-        width: 100%;
         grid-template-columns: repeat(3, 1fr);
+        grid-row-gap: 10px;
       }
     }
   }

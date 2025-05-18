@@ -10,14 +10,17 @@ export default function PokemonCard({
 }) {
   return (
     <div className={styles["pokemon-card"]} onClick={onClick}>
-      <h1>name: {name}</h1>
+      <div className={styles["card-header"]}>
+        <h1>name: {name}</h1>
+      </div>
+      <div className={styles["card-main"]}>
+        <img alt="pokemon image" src={img} />
 
-      <img alt="pokemon image" src={img} />
-
-      <div className={styles.attributes}>
-        <p>type: {type}</p>
-        <p>weight: {weight}</p>
-        <p>height: {height}</p>
+        <div className={styles.attributes}>
+          <p>type: {type}</p>
+          <p>weight: {weight}</p>
+          <p>height: {height}</p>
+        </div>
       </div>
     </div>
   );
