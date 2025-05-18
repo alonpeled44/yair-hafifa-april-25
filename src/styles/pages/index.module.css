@@ -73,6 +73,14 @@
       grid-row-gap: 20px;
 
       overflow-y: auto;
+
+      & img {
+        max-width: 130px;
+        max-height: 150px;
+
+        width: 70%;
+        height: 70%;
+      }
     }
   }
 
