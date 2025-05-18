@@ -8,7 +8,7 @@ export const pokemons = Array.from({ length: 45 }, (_, index) => ({
   height: 1.78,
   weight: 15,
   frontViewImageUrl: line241.src,
-  backViewImageUrl: line241Back.src,
+  backViewImageUrl: line241.src,
   frontShinyViewImageUrl: line241Back.src,
   backShinyViewImageUrl: line241Back.src,
 }));
