@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { pokemons } from "@/lib/pokemons";
 import PokemonCard from "@/components/PokemonCard";
-import PokemonInfo from "@/components/PokemonInfo";
 import Modal from "@/components/Modal";
 import styles from "@/styles/pages/index.module.css";
 
@@ -10,23 +9,10 @@ export default function Home() {
   const [modalIsOpen, modalSetIsOpen] = useState(false);
   const [isShiny, setIsShiny] = useState(false);
 
-  const dialogRef = useRef(null);
-  const contentWrapperRef = useRef(null);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-
-    if (selectedPokemon && dialog) {
-      dialog.showModal();
-    } else if (dialog && dialog.open) {
-      dialog.close();
-    }
-  }, [selectedPokemon]);
-
-  useEffect(() => {
-    modalSetIsOpen(selectedPokemon !== null);
-    console.log(selectedPokemon);
-  }, [selectedPokemon]);
+  const handleModalClose = () => {
+    modalSetIsOpen(false);
+    setSelectedPokemon(null);
+  };
 
   return (
     <div className={styles["pokedex-wrapper"]}>
@@ -66,6 +52,7 @@ export default function Home() {
               height={pokemon.height}
               onClick={() => {
                 setSelectedPokemon(pokemon);
+                modalSetIsOpen(true);
               }}
             />
           ))}
@@ -73,7 +60,7 @@ export default function Home() {
       </div>
 
       {modalIsOpen && (
-        <Modal isOpen={modalIsOpen} setIsOpen={modalSetIsOpen}>
+        <Modal isOpen={modalIsOpen} setIsOpen={handleModalClose}>
           <div className={styles["modal-content-wrapper"]}>
             <div className={styles["modal-header"]}>
               <p id={styles["pokemon-name"]}>{selectedPokemon.name}</p>
