@@ -6,11 +6,11 @@ import styles from "@/styles/pages/index.module.css";
 
 export default function Home() {
   const [selectedPokemon, setSelectedPokemon] = useState(null);
-  const [modalIsOpen, modalSetIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isShiny, setIsShiny] = useState(false);
 
   const handleModalClose = () => {
-    modalSetIsOpen(false);
+    setModalIsOpen(false);
     setSelectedPokemon(null);
   };
 
@@ -52,7 +52,7 @@ export default function Home() {
               height={pokemon.height}
               onClick={() => {
                 setSelectedPokemon(pokemon);
-                modalSetIsOpen(true);
+                setModalIsOpen(true);
               }}
             />
           ))}
@@ -64,6 +64,7 @@ export default function Home() {
           <div className={styles["modal-content-wrapper"]}>
             <div className={styles["modal-header"]}>
               <p id={styles["pokemon-name"]}>{selectedPokemon.name}</p>
+
               <label>
                 <input
                   type="checkbox"
@@ -71,24 +72,25 @@ export default function Home() {
                 ></input>
                 shiny
               </label>
+
               <p>#{selectedPokemon.id}</p>
             </div>
 
             <div className={styles["modal-main"]}>
-              <div className={styles["images"]}>
+              <div className={styles.images}>
                 <img
                   src={
-                    !isShiny
-                      ? selectedPokemon.frontViewImageUrl
-                      : selectedPokemon.frontShinyViewImageUrl
+                    isShiny
+                      ? selectedPokemon.frontShinyViewImageUrl
+                      : selectedPokemon.frontViewImageUrl
                   }
                   alt="pokemon image"
                 />
                 <img
                   src={
-                    !isShiny
-                      ? selectedPokemon.frontViewImageUrl
-                      : selectedPokemon.backShinyViewImageUrl
+                    isShiny
+                      ? selectedPokemon.backShinyViewImageUrl
+                      : selectedPokemon.backViewImageUrl
                   }
                   alt="pokemon's back image"
                 />

@@ -9,7 +9,7 @@
   background-image: url("../../assets/images/charmander.jpg");
 
   & .pokemon-cards-header,
-  .pokemon-cards {
+  & .pokemon-cards {
     width: 85%;
   }
 
@@ -23,7 +23,7 @@
     padding-inline: 100px;
 
     & .search-bar,
-    .cards-preview-settings select {
+    & .cards-preview-settings select {
       height: 35px;
     }
 
@@ -74,14 +74,8 @@
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       grid-auto-rows: minmax(220px, auto);
       grid-column-gap: clamp(0.5rem, 5vw, 3rem);
-      grid-row-gap: 20px;
       justify-content: space-evenly;
-
-      & > * {
-        max-width: 250px;
-        max-height: 350px;
-        justify-self: center;
-      }
+      grid-row-gap: 20px;
 
       max-height: 700px;
       overflow-y: auto;
@@ -130,7 +124,7 @@
     }
 
     & .modal-main {
-      flex: 1 1 auto;
+      flex-grow: 1;
 
       display: flex;
       flex-direction: column;
@@ -154,10 +148,12 @@
 }
 
 @media only screen and (max-width: 480px) {
-  .pokedex-wrapper {
-    & .pokemon-cards-header {
+  .pokemon-cards-container {
+    & .filter-and-sort-cards {
+      padding: 0px;
+
       & .search-bar,
-      .cards-preview-settings select {
+      & .cards-preview-settings select {
         height: 30px;
       }
 
@@ -177,7 +173,8 @@
       }
     }
   }
-  .pokemon-container-wrapper {
+
+  .pokedex-wrapper {
     & .pokemon-cards-container {
       padding-top: 20px;
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import VerticalDivider from "./VerticalDivider";
 import { useRouter } from "next/router";
+import VerticalDivider from "./VerticalDivider";
 import Link from "next/link";
 import pokemonLogo from "@/assets/images/pokemon-logo.png";
 import styles from "@/styles/components/header.module.css";
