@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import styles from "@/styles/components/modal.module.css";
 
-export default function Modal({ children, isOpen, setIsOpen }) {
+export default function Modal({ children, isOpen, handleClose }) {
   const dialogRef = useRef(null);
 
   useEffect(() => {
@@ -11,13 +11,13 @@ export default function Modal({ children, isOpen, setIsOpen }) {
 
     const exitOnBackgroundClick = (event) => {
       if (event.target === dialog) {
-        setIsOpen(false);
+        handleClose();
       }
     };
 
     const exitOnEscape = (event) => {
       if (event.key === "Escape") {
-        setIsOpen(false);
+        handleClose();
       }
     };
 
@@ -36,7 +36,7 @@ export default function Modal({ children, isOpen, setIsOpen }) {
         <dialog className={styles.dialog} ref={dialogRef}>
           <div className={styles["modal-container"]}>
             {children}
-            <button onClick={() => setIsOpen(false)}>&times;</button>
+            <button onClick={handleClose}>&times;</button>
           </div>
         </dialog>
       )}

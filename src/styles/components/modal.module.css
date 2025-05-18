@@ -14,22 +14,24 @@
   border: none;
 
   & .modal-container {
+    position: relative;
+
     width: 550px;
     aspect-ratio: 1/1;
 
     background: rgb(255, 255, 255);
-    position: relative;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
 
     border: solid 3px rgb(0, 0, 0);
 
     & button {
+      position: absolute;
+
       width: 30px;
       aspect-ratio: 1/1;
 
       font-size: 1.2rem;
 
-      position: absolute;
       top: 15px;
       right: 15px;
 

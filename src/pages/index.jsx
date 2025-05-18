@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <div className={styles["pokedex-wrapper"]}>
       <div className={styles["pokemon-cards-container"]}>
-        <section className={styles["filter-and-sort-cards"]}>
+        <section className={styles["pokemon-card-organizer"]}>
           <input
             type="text"
             placeholder="Search card"
@@ -60,13 +60,14 @@ export default function Home() {
       </div>
 
       {modalIsOpen && (
-        <Modal isOpen={modalIsOpen} setIsOpen={handleModalClose}>
+        <Modal isOpen={modalIsOpen} handleClose={handleModalClose}>
           <div className={styles["modal-content-wrapper"]}>
             <div className={styles["modal-header"]}>
               <p id={styles["pokemon-name"]}>{selectedPokemon.name}</p>
 
-              <label>
+              <label htmlFor="shiny">
                 <input
+                  id="shiny"
                   type="checkbox"
                   onClick={() => setIsShiny((prev) => !prev)}
                 ></input>
