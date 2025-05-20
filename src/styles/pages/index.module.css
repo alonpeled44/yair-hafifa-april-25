@@ -61,7 +61,7 @@
       }
     }
 
-    & .pokemon-cards {
+    & .cards {
       height: 0px;
       flex: 1 1 auto;
 
@@ -170,7 +170,7 @@
         }
       }
 
-      & .pokemon-cards {
+      & .cards {
         grid-template-columns: repeat(3, 1fr);
         grid-row-gap: 10px;
       }
