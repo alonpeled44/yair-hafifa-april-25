@@ -41,7 +41,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={styles["cards"]}>
+        <section className={styles.cards}>
           {pokemons.map((pokemon, index) => (
             <PokemonCard
               key={index}
