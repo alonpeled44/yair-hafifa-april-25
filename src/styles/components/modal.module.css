@@ -26,14 +26,13 @@
 
     & button {
       position: absolute;
+      top: 15px;
+      right: 15px;
 
       width: 30px;
       aspect-ratio: 1/1;
 
       font-size: 1.2rem;
-
-      top: 15px;
-      right: 15px;
 
       cursor: pointer;
 

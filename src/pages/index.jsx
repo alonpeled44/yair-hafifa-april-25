@@ -78,7 +78,7 @@ export default function Home() {
             </div>
 
             <div className={styles["modal-main"]}>
-              <div className={styles.images}>
+              <section className={styles.images}>
                 <img
                   src={
                     isShiny
@@ -95,13 +95,13 @@ export default function Home() {
                   }
                   alt="pokemon's back image"
                 />
-              </div>
+              </section>
 
-              <div className={styles["pokemon-data"]}>
+              <section className={styles["pokemon-data"]}>
                 <p>type: {selectedPokemon.type}</p>
                 <p>weight: {selectedPokemon.weight}</p>
                 <p>height: {selectedPokemon.height}</p>
-              </div>
+              </section>
             </div>
           </div>
         </Modal>

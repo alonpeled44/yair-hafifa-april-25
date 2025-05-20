@@ -10,15 +10,11 @@ export default function Modal({ children, isOpen, handleClose }) {
     const dialog = dialogRef.current;
 
     const exitOnBackgroundClick = (event) => {
-      if (event.target === dialog) {
-        handleClose();
-      }
+      if (event.target === dialog) handleClose();
     };
 
     const exitOnEscape = (event) => {
-      if (event.key === "Escape") {
-        handleClose();
-      }
+      if (event.key === "Escape") handleClose();
     };
 
     document.addEventListener("click", exitOnBackgroundClick);
@@ -36,6 +32,7 @@ export default function Modal({ children, isOpen, handleClose }) {
         <dialog className={styles.dialog} ref={dialogRef}>
           <div className={styles["modal-container"]}>
             {children}
+
             <button onClick={handleClose}>&times;</button>
           </div>
         </dialog>
