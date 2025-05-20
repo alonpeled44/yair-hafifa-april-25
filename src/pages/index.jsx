@@ -7,7 +7,10 @@ import styles from "@/styles/pages/index.module.css";
 export default function Home() {
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const [isShiny, setIsShiny] = useState(false);
+  const [attributeSort, setAttributeSort] = useState("id");
+  const [typefilter, setTypeFilter] = useState("All");
 
   const handleModalClose = () => {
     setModalIsOpen(false);
@@ -22,40 +25,83 @@ export default function Home() {
             type="text"
             placeholder="Search card"
             className={styles["search-bar"]}
+            name="searchText"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
           />
 
           <div className={styles["cards-preview-settings"]}>
-            <select>
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="mercedes">Mercedes</option>
-              <option value="audi">Audi</option>
+            <select
+              value={typefilter}
+              onChange={(e) => {
+                setTypeFilter(e.target.value);
+              }}
+            >
+              <option value="All">All</option>
+              <option value="Normal">Normal</option>
+              <option value="Fire">Fire</option>
+              <option value="Water">Water</option>
+              <option value="Grass">Grass</option>
+              <option value="Flying">Flying</option>
+              <option value="Fighting">Fighting</option>
+              <option value="Poison">Poison</option>
+              <option value="Electric">Electric</option>
+              <option value="Ground">Ground</option>
+              <option value="Rock">Rock</option>
+              <option value="Psychic">Psychic</option>
+              <option value="Ice">Ice</option>
+              <option value="Bug">Bug</option>
+              <option value="Ghost">Ghost</option>
+              <option value="Steel">Steel</option>
+              <option value="Dragon">Dragon</option>
+              <option value="Dark">Dark</option>
+              <option value="Fairy">Fairy</option>
             </select>
 
-            <select>
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="mercedes">Mercedes</option>
-              <option value="audi">Audi</option>
+            <select
+              value={attributeSort}
+              onChange={(e) => {
+                setAttributeSort(e.target.value);
+              }}
+            >
+              <option value="id">id</option>
+              <option value="name">name</option>
+              <option value="weight">weight</option>
+              <option value="height">height</option>
             </select>
           </div>
         </section>
 
         <section className={styles.cards}>
-          {pokemons.map((pokemon, index) => (
-            <PokemonCard
-              key={index}
-              name={pokemon.name}
-              img={pokemon.frontViewImageUrl}
-              type={pokemon.type}
-              weight={pokemon.weight}
-              height={pokemon.height}
-              onClick={() => {
-                setSelectedPokemon(pokemon);
-                setModalIsOpen(true);
-              }}
-            />
-          ))}
+          {pokemons
+            .filter(
+              (pokemon) =>
+                pokemon.name
+                  .toLowerCase()
+                  .includes(searchText.trim().toLowerCase()) &&
+                (typefilter === "All" || pokemon.types.includes(typefilter))
+            )
+            .sort((a, b) => {
+              if (attributeSort === "name") {
+                return a.name.localeCompare(b.name);
+              } else {
+                return a[attributeSort] - b[attributeSort];
+              }
+            })
+            .map((pokemon, index) => (
+              <PokemonCard
+                key={index}
+                name={pokemon.name}
+                img={pokemon.frontViewImageUrl}
+                type={pokemon.type}
+                weight={pokemon.weight}
+                height={pokemon.height}
+                onClick={() => {
+                  setSelectedPokemon(pokemon);
+                  setModalIsOpen(true);
+                }}
+              />
+            ))}
         </section>
       </div>
 
