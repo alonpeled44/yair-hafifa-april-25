@@ -2,17 +2,42 @@ import { useState, useRef, useEffect } from "react";
 import { pokemons } from "@/lib/pokemons";
 import PokemonCard from "@/components/PokemonCard";
 import Modal from "@/components/Modal";
+import MultiSelect from "@/components/MultiSelect";
 import styles from "@/styles/pages/index.module.css";
 
 export default function Home() {
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const [isShiny, setIsShiny] = useState(false);
+  const [attributeSort, setAttributeSort] = useState("id");
+  const [selectedTypes, setSelectedTypes] = useState([]);
 
   const handleModalClose = () => {
     setModalIsOpen(false);
     setSelectedPokemon(null);
   };
+
+  const types = [
+    "Normal",
+    "Fire",
+    "Water",
+    "Grass",
+    "Electric",
+    "Ice",
+    "Fighting",
+    "Poison",
+    "Ground",
+    "Flying",
+    "Psychic",
+    "Bug",
+    "Rock",
+    "Ghost",
+    "Dark",
+    "Dragon",
+    "Steel",
+    "Fairy",
+  ];
 
   return (
     <div className={styles["pokedex-wrapper"]}>
@@ -22,40 +47,63 @@ export default function Home() {
             type="text"
             placeholder="Search card"
             className={styles["search-bar"]}
+            name="searchText"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
           />
 
           <div className={styles["cards-preview-settings"]}>
-            <select>
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="mercedes">Mercedes</option>
-              <option value="audi">Audi</option>
-            </select>
+            <MultiSelect
+              options={types}
+              checkedOptions={selectedTypes}
+              setCheckedOptions={setSelectedTypes}
+            />
 
-            <select>
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="mercedes">Mercedes</option>
-              <option value="audi">Audi</option>
+            <select
+              value={attributeSort}
+              onChange={(e) => {
+                setAttributeSort(e.target.value);
+              }}
+            >
+              <option value="id">id</option>
+              <option value="name">name</option>
+              <option value="weight">weight</option>
+              <option value="height">height</option>
             </select>
           </div>
         </section>
 
         <section className={styles.cards}>
-          {pokemons.map((pokemon, index) => (
-            <PokemonCard
-              key={index}
-              name={pokemon.name}
-              img={pokemon.frontViewImageUrl}
-              type={pokemon.type}
-              weight={pokemon.weight}
-              height={pokemon.height}
-              onClick={() => {
-                setSelectedPokemon(pokemon);
-                setModalIsOpen(true);
-              }}
-            />
-          ))}
+          {pokemons
+            .filter(
+              (pokemon) =>
+                pokemon.name
+                  .toLowerCase()
+                  .includes(searchText.trim().toLowerCase()) &&
+                (selectedTypes.length < 1 ||
+                  pokemon.types.some((e) => selectedTypes.includes(e)))
+            )
+            .sort((a, b) => {
+              if (attributeSort === "name") {
+                return a.name.localeCompare(b.name);
+              } else {
+                return a[attributeSort] - b[attributeSort];
+              }
+            })
+            .map((pokemon, index) => (
+              <PokemonCard
+                key={index}
+                name={pokemon.name}
+                img={pokemon.frontViewImageUrl}
+                type={pokemon.type}
+                weight={pokemon.weight}
+                height={pokemon.height}
+                onClick={() => {
+                  setSelectedPokemon(pokemon);
+                  setModalIsOpen(true);
+                }}
+              />
+            ))}
         </section>
       </div>
 
