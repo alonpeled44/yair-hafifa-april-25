@@ -20,14 +20,10 @@
 
     & .pokemon-card-organizer {
       width: 100%;
+      height: 5%;
 
       display: flex;
       justify-content: space-between;
-
-      & .search-bar,
-      & .cards-preview-settings select {
-        height: 35px;
-      }
 
       & .search-bar {
         width: 200px;
@@ -52,11 +48,24 @@
 
         & select {
           width: 110px;
+          position: relative;
 
-          color: rgb(0, 0, 0);
-          background-color: rgb(255, 255, 255);
-          border: solid 1px rgb(0, 0, 0);
+          color: black;
+          background-color: white;
+          border: 1px solid black;
           border-radius: 20px;
+          padding-inline: 5px;
+
+          background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='10' viewBox='0 0 24 24' width='10' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+          background-repeat: no-repeat;
+          background-position: right 0.6rem center;
+          background-size: 0.8rem;
+
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+
+          cursor: pointer;
         }
       }
     }
@@ -165,7 +174,7 @@
 
         & .cards-preview-settings {
           & select {
-            width: 60px;
+            width: 70px;
           }
         }
       }

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { pokemons } from "@/lib/pokemons";
 import PokemonCard from "@/components/PokemonCard";
 import Modal from "@/components/Modal";
+import MultiSelect from "@/components/MultiSelect";
 import styles from "@/styles/pages/index.module.css";
 
 export default function Home() {
@@ -10,12 +11,33 @@ export default function Home() {
   const [searchText, setSearchText] = useState("");
   const [isShiny, setIsShiny] = useState(false);
   const [attributeSort, setAttributeSort] = useState("id");
-  const [typefilter, setTypeFilter] = useState("All");
+  const [selectedTypes, setSelectedTypes] = useState([]);
 
   const handleModalClose = () => {
     setModalIsOpen(false);
     setSelectedPokemon(null);
   };
+
+  const types = [
+    "Normal",
+    "Fire",
+    "Water",
+    "Grass",
+    "Electric",
+    "Ice",
+    "Fighting",
+    "Poison",
+    "Ground",
+    "Flying",
+    "Psychic",
+    "Bug",
+    "Rock",
+    "Ghost",
+    "Dark",
+    "Dragon",
+    "Steel",
+    "Fairy",
+  ];
 
   return (
     <div className={styles["pokedex-wrapper"]}>
@@ -31,32 +53,11 @@ export default function Home() {
           />
 
           <div className={styles["cards-preview-settings"]}>
-            <select
-              value={typefilter}
-              onChange={(e) => {
-                setTypeFilter(e.target.value);
-              }}
-            >
-              <option value="All">All</option>
-              <option value="Normal">Normal</option>
-              <option value="Fire">Fire</option>
-              <option value="Water">Water</option>
-              <option value="Grass">Grass</option>
-              <option value="Flying">Flying</option>
-              <option value="Fighting">Fighting</option>
-              <option value="Poison">Poison</option>
-              <option value="Electric">Electric</option>
-              <option value="Ground">Ground</option>
-              <option value="Rock">Rock</option>
-              <option value="Psychic">Psychic</option>
-              <option value="Ice">Ice</option>
-              <option value="Bug">Bug</option>
-              <option value="Ghost">Ghost</option>
-              <option value="Steel">Steel</option>
-              <option value="Dragon">Dragon</option>
-              <option value="Dark">Dark</option>
-              <option value="Fairy">Fairy</option>
-            </select>
+            <MultiSelect
+              options={types}
+              checkedOptions={selectedTypes}
+              setCheckedOptions={setSelectedTypes}
+            />
 
             <select
               value={attributeSort}
@@ -79,7 +80,8 @@ export default function Home() {
                 pokemon.name
                   .toLowerCase()
                   .includes(searchText.trim().toLowerCase()) &&
-                (typefilter === "All" || pokemon.types.includes(typefilter))
+                (selectedTypes.length < 1 ||
+                  pokemon.types.some((e) => selectedTypes.includes(e)))
             )
             .sort((a, b) => {
               if (attributeSort === "name") {
