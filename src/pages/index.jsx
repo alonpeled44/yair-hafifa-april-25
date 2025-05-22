@@ -1,43 +1,51 @@
-import { useState, useRef, useEffect } from "react";
-import { pokemons } from "@/lib/pokemons";
-import PokemonCard from "@/components/PokemonCard";
+import { useState, useEffect, useMemo } from "react";
+import fetchPokemons, { fetchTypes } from "@/pages/api/pokemonApi";
 import Modal from "@/components/Modal";
 import MultiSelect from "@/components/MultiSelect";
+import PokemonCard from "@/components/PokemonCard";
 import styles from "@/styles/pages/index.module.css";
 
 export default function Home() {
+  const [pokemons, setPokemons] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [isShiny, setIsShiny] = useState(false);
   const [attributeSort, setAttributeSort] = useState("id");
   const [selectedTypes, setSelectedTypes] = useState([]);
+  const [types, setTypes] = useState([]);
+
+  useEffect(() => {
+    const getTypes = async () => {
+      try {
+        const fetchedTypes = await fetchTypes();
+        setTypes(fetchedTypes);
+      } catch (error) {
+        console.error("Error getting pokemon types:", error);
+      }
+    };
+
+    getTypes();
+  }, []);
+
+  useEffect(() => {
+    const loadPokemons = async () => {
+      try {
+        const fetchedPokemons = await fetchPokemons(150);
+        setPokemons(fetchedPokemons);
+      } catch (error) {
+        console.error("Error loading Pokemon:", error);
+      }
+    };
+
+    loadPokemons();
+  }, []);
 
   const handleModalClose = () => {
     setModalIsOpen(false);
     setSelectedPokemon(null);
+    setIsShiny(false);
   };
-
-  const types = [
-    "Normal",
-    "Fire",
-    "Water",
-    "Grass",
-    "Electric",
-    "Ice",
-    "Fighting",
-    "Poison",
-    "Ground",
-    "Flying",
-    "Psychic",
-    "Bug",
-    "Rock",
-    "Ghost",
-    "Dark",
-    "Dragon",
-    "Steel",
-    "Fairy",
-  ];
 
   return (
     <div className={styles["pokedex-wrapper"]}>
@@ -77,9 +85,14 @@ export default function Home() {
           {pokemons
             .filter(
               (pokemon) =>
-                pokemon.name
-                  .toLowerCase()
-                  .includes(searchText.trim().toLowerCase()) &&
+                ((searchText.includes("#") &&
+                  pokemon.id.toString() ===
+                    searchText.trim().replace("#", "")) ||
+                  pokemon.name
+                    .toLowerCase()
+                    .includes(searchText.trim().toLowerCase()) ||
+                  pokemon.weight.toString().includes(searchText) ||
+                  pokemon.height.toString().includes(searchText)) &&
                 (selectedTypes.length < 1 ||
                   pokemon.types.some((e) => selectedTypes.includes(e)))
             )
@@ -95,7 +108,7 @@ export default function Home() {
                 key={index}
                 name={pokemon.name}
                 img={pokemon.frontViewImageUrl}
-                type={pokemon.type}
+                types={pokemon.types}
                 weight={pokemon.weight}
                 height={pokemon.height}
                 onClick={() => {
@@ -146,7 +159,7 @@ export default function Home() {
               </section>
 
               <section className={styles["pokemon-data"]}>
-                <p>type: {selectedPokemon.type}</p>
+                <p>type: {selectedPokemon.types.join(", ")}</p>
                 <p>weight: {selectedPokemon.weight}</p>
                 <p>height: {selectedPokemon.height}</p>
               </section>
