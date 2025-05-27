@@ -29,7 +29,7 @@ export default function Modal({ children, isOpen, handleClose }) {
   return (
     <>
       {isOpen && (
-        <dialog className={styles.dialog} ref={dialogRef}>
+        <dialog className={styles.dialog} ref={dialogRef} open>
           <div className={styles["modal-container"]}>
             {children}
 

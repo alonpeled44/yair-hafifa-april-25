@@ -106,6 +106,7 @@ export default function Home() {
             .map((pokemon, index) => (
               <PokemonCard
                 key={index}
+                id={pokemon.id}
                 name={pokemon.name}
                 img={pokemon.frontViewImageUrl}
                 types={pokemon.types}

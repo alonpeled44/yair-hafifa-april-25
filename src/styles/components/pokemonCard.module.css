@@ -1,4 +1,7 @@
 .pokemon-card {
+  width: 220px;
+  height: 350px;
+
   display: flex;
   flex-direction: column;
 
@@ -9,18 +12,7 @@
 
   background-image: url("../../assets/images/PokemonCardBackground.jpg");
 
-  .card-header {
-    width: 100%;
-
-    display: flex;
-    justify-content: center;
-
-    & h1 {
-      font-size: 0.9rem;
-    }
-  }
-
-  .card-main {
+  .card-content {
     width: 100%;
     height: 100%;
 
@@ -31,6 +23,27 @@
 
     & > h1 {
       font-size: 1.1rem;
+    }
+
+    & > img {
+      width: 80%;
+      aspect-ratio: 1/1;
+    }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .pokemon-card {
+    width: 110px;
+    height: 250px;
+
+    & .card-content {
+      flex-direction: column-reverse;
+      gap: 20px;
+
+      & .attributes {
+        display: none;
+      }
     }
   }
 }
