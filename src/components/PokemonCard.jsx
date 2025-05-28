@@ -20,7 +20,7 @@ export default function PokemonCard({
         </h1>
         <img alt="pokemon image" src={img} />
 
-        {windowWidth >= 480 && (
+        {windowWidth > 480 && (
           <div className={styles.attributes}>
             <p>type: {types.join(", ")}</p>
             <p>weight: {weight}</p>
