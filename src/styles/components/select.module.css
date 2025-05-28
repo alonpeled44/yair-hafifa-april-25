@@ -44,7 +44,7 @@
     border: solid 1px rgb(0, 0, 0);
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 
-    label {
+    & label {
       display: flex;
       align-items: center;
       gap: 8px;
@@ -56,6 +56,14 @@
       & input[type="button"] {
         display: none;
       }
+    }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .dropdown {
+    .dropbtn {
+      width: 80px;
     }
   }
 }
