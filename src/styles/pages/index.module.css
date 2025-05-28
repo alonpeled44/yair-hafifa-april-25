@@ -153,6 +153,7 @@
 
     & .pokemon-cards-container {
       & .pokemon-card-organizer {
+        justify-content: space-around;
         & .search-bar {
           width: 130px;
         }
@@ -160,12 +161,6 @@
         & ::placeholder {
           color: rgb(212, 212, 212);
           font-size: 1rem;
-        }
-
-        & .cards-preview-settings {
-          & select {
-            width: 70px;
-          }
         }
       }
 

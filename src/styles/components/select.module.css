@@ -63,7 +63,7 @@
 @media only screen and (max-width: 480px) {
   .dropdown {
     .dropbtn {
-      width: 80px;
+      width: 70px;
     }
   }
 }
