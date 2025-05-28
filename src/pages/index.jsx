@@ -21,12 +21,14 @@ export default function Home() {
   useEffect(() => {
     async function init() {
       const pokemons = await getPokemons();
+      const types = await getTypes();
+
       setPokemons(pokemons);
-      setTypes(getTypes());
+      setTypes(types);
     }
 
     init();
-  });
+  }, []);
 
   const handleModalClose = () => {
     setModalIsOpen(false);

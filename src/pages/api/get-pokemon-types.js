@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
   if (req.method !== "GET") {
-    res.status(405).json({ error: `Method ${req.method} Not Allowed` });
+    return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
   }
 
   try {
@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     const data = await response.json();
     const types = data.results.map((typeInfo) => typeInfo.name);
 
-    res.status(200).json({ types: { types } });
+    return res.status(200).json({ types: { types } });
   } catch (error) {
     console.error(error);
     return res.status(400).json({ error: { error } });

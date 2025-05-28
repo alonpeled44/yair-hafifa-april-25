@@ -5,19 +5,26 @@ export default async function handler(req, res) {
 
   const pokemonsAmount = 151;
   try {
-    let pokemons = [];
+    const fetchPromises = [];
     for (let i = 0; i < pokemonsAmount; i++) {
-      const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${i + 1}`
-      );
-      if (!response.ok) {
+      fetchPromises.push(fetch(`https://pokeapi.co/api/v2/pokemon/${i + 1}`));
+    }
+
+    const responses = await Promise.all(fetchPromises);
+
+    for (let i = 0; i < responses.length; i++) {
+      if (!responses[i].ok) {
         throw new Error(`Could not fetch pokemon with id: ${i + 1}`);
       }
-      const data = await response.json();
+    }
 
+    const dataPromises = responses.map((response) => response.json());
+    const pokemonData = await Promise.all(dataPromises);
+
+    const pokemons = pokemonData.map((data) => {
       const types = data.types.map((typeInfo) => typeInfo.type.name);
 
-      pokemons[i] = {
+      return {
         id: data.id,
         name: data.name,
         weight: data.weight,
@@ -28,7 +35,7 @@ export default async function handler(req, res) {
         frontShinyViewImageUrl: data.sprites.front_shiny,
         backShinyViewImageUrl: data.sprites.back_shiny,
       };
-    }
+    });
 
     return res.status(200).json({ pokemons: { pokemons } });
   } catch (error) {
