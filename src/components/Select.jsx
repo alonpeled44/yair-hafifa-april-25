@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "@/styles/components/multiSelect.module.css";
 
-export default function MultiSelect({
+export default function Select({
+  multiple,
   options = [],
   checkedOptions,
   setCheckedOptions,
@@ -34,19 +35,30 @@ export default function MultiSelect({
         className={styles.dropbtn}
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        types
+        {multiple ? "types" : checkedOptions}
       </button>
 
       {isOpen && (
         <div className={styles["dropdown-content"]}>
           {options.map((option, index) => (
             <label key={index}>
-              <input
-                type="checkbox"
-                name={option}
-                checked={checkedOptions.includes(option)}
-                onChange={() => handleCheckboxChange(option)}
-              />
+              {multiple ? (
+                <input
+                  type="checkbox"
+                  name={option}
+                  checked={checkedOptions.includes(option)}
+                  onChange={() => handleCheckboxChange(option)}
+                />
+              ) : (
+                <input
+                  type="button"
+                  key={index}
+                  value={option}
+                  onClick={(e) => {
+                    setCheckedOptions(e.target.value);
+                  }}
+                />
+              )}
               {option}
             </label>
           ))}

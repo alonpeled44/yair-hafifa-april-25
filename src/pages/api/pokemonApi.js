@@ -1,12 +1,15 @@
-export default async function fetchPokemons(pokemonsAmount = 151) {
+export default async function fetchPokemons() {
+  const pokemonsAmount = 151;
   try {
     let pokemons = [];
     for (let i = 0; i < pokemonsAmount; i++) {
-      let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i + 1}`);
+      const response = await fetch(
+        `https://pokeapi.co/api/v2/pokemon/${i + 1}`
+      );
       if (!response.ok) {
         throw new Error(`Could not fetch pokemon with id: ${i + 1}`);
       }
-      let data = await response.json();
+      const data = await response.json();
 
       const types = data.types.map((typeInfo) => typeInfo.type.name);
 

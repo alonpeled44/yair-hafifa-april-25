@@ -40,10 +40,6 @@
     & .card-content {
       flex-direction: column-reverse;
       gap: 20px;
-
-      & .attributes {
-        display: none;
-      }
     }
   }
 }

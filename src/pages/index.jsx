@@ -1,7 +1,7 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import fetchPokemons, { fetchTypes } from "@/pages/api/pokemonApi";
 import Modal from "@/components/Modal";
-import MultiSelect from "@/components/MultiSelect";
+import Select from "@/components/Select";
 import PokemonCard from "@/components/PokemonCard";
 import styles from "@/styles/pages/index.module.css";
 
@@ -14,6 +14,8 @@ export default function Home() {
   const [attributeSort, setAttributeSort] = useState("id");
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [types, setTypes] = useState([]);
+
+  const attributes = ["id", "name", "weight", "height"];
 
   useEffect(() => {
     const getTypes = async () => {
@@ -31,7 +33,7 @@ export default function Home() {
   useEffect(() => {
     const loadPokemons = async () => {
       try {
-        const fetchedPokemons = await fetchPokemons(150);
+        const fetchedPokemons = await fetchPokemons();
         setPokemons(fetchedPokemons);
       } catch (error) {
         console.error("Error loading Pokemon:", error);
@@ -61,23 +63,19 @@ export default function Home() {
           />
 
           <div className={styles["cards-preview-settings"]}>
-            <MultiSelect
+            <Select
+              multiple={true}
               options={types}
               checkedOptions={selectedTypes}
               setCheckedOptions={setSelectedTypes}
             />
 
-            <select
-              value={attributeSort}
-              onChange={(e) => {
-                setAttributeSort(e.target.value);
-              }}
-            >
-              <option value="id">id</option>
-              <option value="name">name</option>
-              <option value="weight">weight</option>
-              <option value="height">height</option>
-            </select>
+            <Select
+              multiple={false}
+              options={attributes}
+              checkedOptions={attributeSort}
+              setCheckedOptions={setAttributeSort}
+            />
           </div>
         </section>
 

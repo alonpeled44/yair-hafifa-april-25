@@ -1,4 +1,5 @@
 import styles from "@/styles/components/pokemonCard.module.css";
+import { useWindowWidth } from "@/contexts/WindowWidthProvider";
 
 export default function PokemonCard({
   id,
@@ -9,6 +10,8 @@ export default function PokemonCard({
   height,
   onClick,
 }) {
+  const windowWidth = useWindowWidth();
+
   return (
     <div className={styles["pokemon-card"]} onClick={onClick}>
       <div className={styles["card-content"]}>
@@ -17,11 +20,13 @@ export default function PokemonCard({
         </h1>
         <img alt="pokemon image" src={img} />
 
-        <div className={styles.attributes}>
-          <p>type: {types.join(", ")}</p>
-          <p>weight: {weight}</p>
-          <p>height: {height}</p>
-        </div>
+        {windowWidth >= 480 && (
+          <div className={styles.attributes}>
+            <p>type: {types.join(", ")}</p>
+            <p>weight: {weight}</p>
+            <p>height: {height}</p>
+          </div>
+        )}
       </div>
     </div>
   );
