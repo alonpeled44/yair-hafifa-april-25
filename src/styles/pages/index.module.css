@@ -4,7 +4,7 @@
 
   display: flex;
 
-  padding-inline: 10%;
+  padding-inline: 15%;
 
   background-image: url("../../assets/images/charmander.jpg");
 
@@ -75,9 +75,8 @@
       flex: 1 1 auto;
 
       display: flex;
-      justify-content: space-evenly;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 25px;
 
       overflow-y: scroll;
     }

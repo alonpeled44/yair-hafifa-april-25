@@ -1,6 +1,6 @@
 .pokemon-card {
-  width: 220px;
-  height: 350px;
+  width: 200px;
+  height: 300px;
 
   display: flex;
   flex-direction: column;
@@ -35,7 +35,7 @@
 @media only screen and (max-width: 480px) {
   .pokemon-card {
     width: 110px;
-    height: 250px;
+    height: 200px;
 
     & .card-content {
       flex-direction: column-reverse;
