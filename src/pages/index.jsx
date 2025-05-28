@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import fetchPokemons, { fetchTypes } from "@/pages/api/pokemonApi";
+import usePokemon from "@/hooks/usePokemon";
 import Modal from "@/components/Modal";
 import Select from "@/components/Select";
 import PokemonCard from "@/components/PokemonCard";
 import styles from "@/styles/pages/index.module.css";
 
 export default function Home() {
+  const { getPokemons, getTypes } = usePokemon();
   const [pokemons, setPokemons] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -18,30 +19,14 @@ export default function Home() {
   const attributes = ["id", "name", "weight", "height"];
 
   useEffect(() => {
-    const getTypes = async () => {
-      try {
-        const fetchedTypes = await fetchTypes();
-        setTypes(fetchedTypes);
-      } catch (error) {
-        console.error("Error getting pokemon types:", error);
-      }
-    };
+    async function init() {
+      const pokemons = await getPokemons();
+      setPokemons(pokemons);
+      setTypes(getTypes());
+    }
 
-    getTypes();
-  }, []);
-
-  useEffect(() => {
-    const loadPokemons = async () => {
-      try {
-        const fetchedPokemons = await fetchPokemons();
-        setPokemons(fetchedPokemons);
-      } catch (error) {
-        console.error("Error loading Pokemon:", error);
-      }
-    };
-
-    loadPokemons();
-  }, []);
+    init();
+  });
 
   const handleModalClose = () => {
     setModalIsOpen(false);
