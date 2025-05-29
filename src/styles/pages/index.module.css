@@ -100,7 +100,7 @@
 
     & .modal-header {
       width: 100%;
-      height: 10%;
+      height: 80px;
 
       display: flex;
       align-items: flex-end;

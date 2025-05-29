@@ -44,36 +44,26 @@
   }
 }
 
-@keyframes pop-up {
-  0% {
-    top: 450px;
-  }
-  100% {
-    top: var(--top);
-  }
-}
-
 @media only screen and (max-width: 480px) {
   .dialog {
+    align-items: flex-end;
+
     & .modal-container {
-      top: 380px;
-
       width: 350px;
-      height: 750px;
 
-      aspect-ratio: none;
+      border-bottom: none;
 
-      animation-duration: 1s;
-      animation-name: pop-up;
+      animation-duration: 0.4s;
+      animation-name: slide-up;
     }
   }
 
-  @keyframes pop-up {
+  @keyframes slide-up {
     0% {
-      top: 100%;
+      transform: translateY(100vh);
     }
     100% {
-      top: 380px;
+      transform: translateY(0);
     }
   }
 }
