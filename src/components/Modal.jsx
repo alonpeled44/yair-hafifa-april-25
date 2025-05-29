@@ -1,42 +1,55 @@
 import { useRef, useEffect } from "react";
+import { useWindowWidth } from "@/contexts/WindowWidthProvider";
 import styles from "@/styles/components/modal.module.css";
 
 export default function Modal({ children, isOpen, handleClose }) {
   const dialogRef = useRef(null);
 
-  useEffect(() => {
-    if (!isOpen) return;
+  const windowWidth = useWindowWidth();
 
+  useEffect(() => {
     const dialog = dialogRef.current;
+
+    if (isOpen) {
+      dialog.close();
+
+      if (windowWidth > 480) {
+        dialog.showModal();
+      } else {
+        dialog.show();
+      }
+    } else {
+      dialog.close();
+      return;
+    }
 
     const exitOnBackgroundClick = (event) => {
       if (event.target === dialog) handleClose();
     };
 
     const exitOnEscape = (event) => {
-      if (event.key === "Escape") handleClose();
+      if (windowWidth > 480 && event.key === "Escape") handleClose();
     };
 
-    document.addEventListener("click", exitOnBackgroundClick);
-    document.addEventListener("keydown", exitOnEscape);
+    if (isOpen) {
+      dialog.addEventListener("click", exitOnBackgroundClick);
+      if (windowWidth > 480) {
+        document.addEventListener("keydown", handleClose);
+      }
+    }
 
     return () => {
-      document.removeEventListener("click", exitOnBackgroundClick);
+      dialog.removeEventListener("click", exitOnBackgroundClick);
       document.removeEventListener("keydown", exitOnEscape);
     };
-  }, [isOpen]);
+  }, [isOpen, windowWidth]);
 
   return (
-    <>
-      {isOpen && (
-        <dialog className={styles.dialog} ref={dialogRef} open>
-          <div className={styles["modal-container"]}>
-            {children}
-
-            <button onClick={handleClose}>&times;</button>
-          </div>
-        </dialog>
-      )}
-    </>
+    <dialog className={styles.dialog} ref={dialogRef}>
+      <div className={styles["modal-container"]}>
+        {children}
+        <button onClick={handleClose}>&times;</button>
+      </div>
+    </dialog>
   );
 }

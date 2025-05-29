@@ -116,6 +116,10 @@
       & label {
         display: flex;
         gap: 2px;
+
+        & input {
+          outline: none;
+        }
       }
     }
 

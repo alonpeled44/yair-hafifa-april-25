@@ -9,14 +9,17 @@ export default function Home() {
   const { getPokemons, getTypes } = usePokemon();
   const [pokemons, setPokemons] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [searchText, setSearchText] = useState("");
   const [isShiny, setIsShiny] = useState(false);
+
+  const [searchText, setSearchText] = useState("");
+
   const [attributeSort, setAttributeSort] = useState("id");
+  const attributes = ["id", "name", "weight", "height"];
+
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [types, setTypes] = useState([]);
-
-  const attributes = ["id", "name", "weight", "height"];
 
   useEffect(() => {
     async function init() {
