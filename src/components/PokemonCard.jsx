@@ -1,5 +1,5 @@
 import { useWindowWidth } from "@/contexts/WindowWidthProvider";
-import styles from "@/styles/components/pokemonCard.module.css";
+import styles from "@/styles/components/pokemon-card.module.css";
 
 export default function PokemonCard({
   id,

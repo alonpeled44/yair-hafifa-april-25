@@ -28,7 +28,7 @@ export default function Modal({ children, isOpen, handleClose }) {
     };
 
     const exitOnEscape = (event) => {
-      if (windowWidth > 480 && event.key === "Escape") handleClose();
+      if (event.key === "Escape") handleClose();
     };
 
     if (isOpen) {
