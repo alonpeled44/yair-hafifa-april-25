@@ -5,19 +5,25 @@
 }
 
 html,
-body,
-body > div {
+body {
   width: 100vw;
   height: 100vh;
 }
 
 body > div {
+  position: relative;
+
+  width: 100vw;
+  height: 100vh;
+
   display: flex;
   flex-direction: column;
 }
 
 main {
-  flex-grow: 1;
+  height: 0px;
+  flex: 1 1 auto;
+
   display: flex;
   flex-direction: column;
 }
