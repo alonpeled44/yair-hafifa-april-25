@@ -1,5 +1,5 @@
-import styles from "@/styles/components/pokemonCard.module.css";
 import { useWindowWidth } from "@/contexts/WindowWidthProvider";
+import styles from "@/styles/components/pokemonCard.module.css";
 
 export default function PokemonCard({
   id,
@@ -15,9 +15,7 @@ export default function PokemonCard({
   return (
     <div className={styles["pokemon-card"]} onClick={onClick}>
       <div className={styles["card-content"]}>
-        <h1>
-          {name} #{id}
-        </h1>
+        <h1>{`${name} #${id}`}</h1>
         <img alt="pokemon image" src={img} />
 
         {windowWidth > 480 && (

@@ -33,9 +33,7 @@ export default function Modal({ children, isOpen, handleClose }) {
 
     if (isOpen) {
       dialog.addEventListener("click", exitOnBackgroundClick);
-      if (windowWidth > 480) {
-        document.addEventListener("keydown", handleClose);
-      }
+      document.addEventListener("keydown", handleClose);
     }
 
     return () => {

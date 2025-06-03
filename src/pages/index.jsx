@@ -5,8 +5,11 @@ import Select from "@/components/Select";
 import PokemonCard from "@/components/PokemonCard";
 import styles from "@/styles/pages/index.module.css";
 
+const attributes = ["id", "name", "weight", "height"];
+
 export default function Home() {
   const { getPokemons, getTypes } = usePokemon();
+
   const [pokemons, setPokemons] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
 
@@ -16,7 +19,6 @@ export default function Home() {
   const [searchText, setSearchText] = useState("");
 
   const [attributeSort, setAttributeSort] = useState("id");
-  const attributes = ["id", "name", "weight", "height"];
 
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [types, setTypes] = useState([]);
