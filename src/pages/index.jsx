@@ -13,7 +13,7 @@ export default function Home() {
   const [pokemons, setPokemons] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isShiny, setIsShiny] = useState(false);
 
   const [searchText, setSearchText] = useState("");
@@ -36,7 +36,7 @@ export default function Home() {
   }, []);
 
   const handleModalClose = () => {
-    setModalIsOpen(false);
+    setIsModalOpen(false);
     setSelectedPokemon(null);
     setIsShiny(false);
   };
@@ -104,15 +104,15 @@ export default function Home() {
                 height={pokemon.height}
                 onClick={() => {
                   setSelectedPokemon(pokemon);
-                  setModalIsOpen(true);
+                  setIsModalOpen(true);
                 }}
               />
             ))}
         </section>
       </div>
 
-      {modalIsOpen && (
-        <Modal isOpen={modalIsOpen} handleClose={handleModalClose}>
+      {isModalOpen && (
+        <Modal isOpen={isModalOpen} handleClose={handleModalClose}>
           <div className={styles["modal-content-wrapper"]}>
             <div className={styles["modal-header"]}>
               <p id={styles["pokemon-name"]}>{selectedPokemon.name}</p>
