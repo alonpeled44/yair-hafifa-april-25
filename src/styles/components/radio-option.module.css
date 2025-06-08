@@ -13,9 +13,9 @@
     justify-content: center;
     align-items: center;
 
-    padding-inline: 3px;
+    padding-inline: 4px;
 
-    border-radius: 6px;
+    border-radius: 8px;
 
     cursor: pointer;
   }

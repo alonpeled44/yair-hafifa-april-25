@@ -6,10 +6,10 @@ export default function Setting({
   options,
   groupName,
   selected,
-  setSelected,
+  onClick,
 }) {
   return (
-    <div className={styles["selector-wrapper"]}>
+    <div className={styles["setting-wrapper"]}>
       <h1>{title}:</h1>
 
       <div className={styles["radio-options"]}>
@@ -20,9 +20,7 @@ export default function Setting({
             value={key}
             groupName={groupName}
             isSelected={selected === key}
-            onClick={() => {
-              setSelected(key);
-            }}
+            onClick={() => onClick(key)}
           />
         ))}
       </div>

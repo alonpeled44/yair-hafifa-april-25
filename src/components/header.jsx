@@ -26,9 +26,9 @@ const fonts = {
 
 export default function Header({ newUsersDefaultPage }) {
   const [username, setUsername] = useState("");
-  const [themeMode, setThemeMode] = useState(themes[0]);
+  const [theme, setTheme] = useState(themes[0]);
   const [fontSize, setFontSize] = useState(fontSizes[0]);
-  const [isFontsOpen, setIsFontsOpen] = useState(false);
+  const [isFontExtensionOpen, setIsFontExtensionOpen] = useState(false);
 
   const windowWidth = useWindowWidth();
 
@@ -38,9 +38,9 @@ export default function Header({ newUsersDefaultPage }) {
 
   const router = useRouter();
 
-  function chooseFontSize(newFontSize) {
+  function handleFontSizeSelection(newFontSize) {
     setFontSize(newFontSize);
-    setIsFontsOpen(false);
+    setIsFontExtensionOpen(false);
   }
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export default function Header({ newUsersDefaultPage }) {
           )}
         </div>
 
-        <div className={styles.right} style={{ position: "relative" }}>
+        <div className={styles.right}>
           <p>{new Date().toLocaleDateString("he-IL")}</p>
           <button onClick={() => setIsModalOpen((prev) => !prev)}>
             <img src={settingsIcon.src} alt="settings Icon" />
@@ -88,35 +88,36 @@ export default function Header({ newUsersDefaultPage }) {
             <div className={styles["settings-dropdown"]}>
               <button
                 onClick={() =>
-                  setThemeMode((prev) => (prev === "light" ? "dark" : "light"))
+                  setTheme((prev) => (prev === "light" ? "dark" : "light"))
                 }
               >
-                {lightmodes[themeMode]}
+                {lightmodes[theme]}
               </button>
               <button
                 onClick={() => {
-                  setIsFontsOpen((prev) => !prev);
+                  setIsFontExtensionOpen((prev) => !prev);
                 }}
                 data-font-size={fontSize}
               >
                 <span>{fonts[fontSize]}</span>
               </button>
 
-              {isFontsOpen && (
+              {isFontExtensionOpen && (
                 <div className={styles["font-sizes"]}>
-                  {fontSizes
-                    .filter((curFontSize) => curFontSize !== fontSize)
-                    .map((curFontSize) => {
-                      return (
+                  {fontSizes.reduce((acc, curFontSize) => {
+                    if (curFontSize !== fontSize) {
+                      acc.push(
                         <button
                           key={curFontSize}
-                          onClick={() => chooseFontSize(curFontSize)}
+                          onClick={() => handleFontSizeSelection(curFontSize)}
                           data-font-size={curFontSize}
                         >
                           <span>{fonts[curFontSize]}</span>
                         </button>
                       );
-                    })}
+                    }
+                    return acc;
+                  }, [])}
                 </div>
               )}
             </div>
@@ -136,15 +137,15 @@ export default function Header({ newUsersDefaultPage }) {
               title="Theme"
               groupName={"themes"}
               options={lightmodes}
-              selected={themeMode}
-              setSelected={setThemeMode}
+              selected={theme}
+              onClick={(theme) => setTheme(theme)}
             />
             <Setting
               title="Fonts"
               groupName={"font-sizes"}
               options={fonts}
               selected={fontSize}
-              setSelected={setFontSize}
+              onClick={(fontSize) => setFontSize(fontSize)}
             />
           </div>
         </Modal>
