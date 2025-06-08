@@ -19,9 +19,6 @@
   & .modal-container {
     position: relative;
 
-    width: fit-content;
-    aspect-ratio: 1/1;
-
     background: rgb(255, 255, 255);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
 
@@ -52,8 +49,6 @@
     align-items: flex-end;
 
     & .modal-container {
-      width: 350px;
-
       border-bottom: none;
 
       animation: slide-up 0.4s;

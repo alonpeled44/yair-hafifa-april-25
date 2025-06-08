@@ -175,6 +175,9 @@
       }
     }
     & .modal-content-wrapper {
+      width: 350px;
+      aspect-ratio: 1/1;
+
       gap: 5px;
 
       & .modal-main {
