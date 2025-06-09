@@ -5,8 +5,7 @@
 
   & .radio-options {
     display: flex;
-    flex-direction: row;
-    gap: 5px;
+    gap: 8px;
 
     user-select: none;
   }
