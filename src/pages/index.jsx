@@ -137,7 +137,6 @@ export default function Home() {
                       ? selectedPokemon.frontShinyViewImageUrl
                       : selectedPokemon.frontViewImageUrl
                   }
-                  alt="pokemon image"
                 />
                 <img
                   src={
@@ -145,7 +144,6 @@ export default function Home() {
                       ? selectedPokemon.backShinyViewImageUrl
                       : selectedPokemon.backViewImageUrl
                   }
-                  alt="pokemon's back image"
                 />
               </section>
 

@@ -1,0 +1,26 @@
+.label {
+  display: flex;
+
+  & input {
+    display: none;
+  }
+
+  & span {
+    width: 50px;
+    aspect-ratio: 1/1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-inline: 4px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+  }
+
+  & input:checked + span {
+    outline: 1px solid rgb(0, 0, 0);
+  }
+}
