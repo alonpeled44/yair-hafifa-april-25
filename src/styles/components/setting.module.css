@@ -1,0 +1,12 @@
+.setting-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  & .radio-options {
+    display: flex;
+    gap: 8px;
+
+    user-select: none;
+  }
+}
