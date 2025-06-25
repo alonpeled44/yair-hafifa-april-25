@@ -13,9 +13,12 @@ export default function App({ Component, pageProps }) {
   const newUsersDefaultPage = "/login";
 
   useEffect(() => {
-    setTheme(localStorage.getItem("theme"));
-    setFont(localStorage.getItem("font"))
-  }, [])
+    const storedTheme = localStorage.getItem("theme") || "light";
+    const storedFont = localStorage.getItem("font") || "medium";
+
+    setTheme(storedTheme);
+    setFont(storedFont);
+  }, []);
 
   useEffect(() => {
     const savedUsername = localStorage.getItem("username");
@@ -27,36 +30,42 @@ export default function App({ Component, pageProps }) {
     else router.push(newUsersDefaultPage);
   }, []);
 
- useEffect(() => {
-  document.body.classList.remove("light", "dark");
+  useEffect(() => {
+    document.body.classList.remove("light", "dark");
 
-  if (theme === "dark") {
-    document.body.classList.add("dark");
-    localStorage.setItem("theme", "dark");
-  } else {
-    document.body.classList.add("light");
-    localStorage.setItem("theme", "light");
-  }
+    if (theme === "dark") {
+      document.body.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.body.classList.add("light");
+      localStorage.setItem("theme", "light");
+    }
 
-  document.body.classList.remove("small", "medium", "large");
+    document.body.classList.remove("small", "medium", "large");
 
-  if (font === "small") {
-    document.body.classList.add("small");
-    localStorage.setItem("font", "small");
-  } else if (font === "large") {
-    document.body.classList.add("large");
-    localStorage.setItem("font", "large");
-  } else {
-    document.body.classList.add("medium");
-    localStorage.setItem("font", "medium");
-  }
-}, [theme, font]);
+    if (font === "small") {
+      document.body.classList.add("small");
+      localStorage.setItem("font", "small");
+    } else if (font === "large") {
+      document.body.classList.add("large");
+      localStorage.setItem("font", "large");
+    } else {
+      document.body.classList.add("medium");
+      localStorage.setItem("font", "medium");
+    }
+  }, [theme, font]);
 
   return (
     <WindowWidthProvider>
-      <Header newUsersDefaultPage={newUsersDefaultPage} theme={theme} setTheme={setTheme} font={font} setFont={setFont}/>
+      <Header
+        newUsersDefaultPage={newUsersDefaultPage}
+        theme={theme}
+        setTheme={setTheme}
+        font={font}
+        setFont={setFont}
+      />
       <main>
-        <Component {...pageProps} theme={theme}/>
+        <Component {...pageProps} theme={theme} />
       </main>
     </WindowWidthProvider>
   );
