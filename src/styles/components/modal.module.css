@@ -16,16 +16,15 @@
   background-color: rgba(0, 0, 0, 0.5);
   border: none;
 
+  color: var(--text-color);
+
   & .modal-container {
     position: relative;
 
-    width: 550px;
-    aspect-ratio: 1/1;
-
-    background: rgb(255, 255, 255);
+    background: var(--primary-color);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
 
-    border: solid 3px rgb(0, 0, 0);
+    border: solid 3px var(--text-color);
 
     & button {
       position: absolute;
@@ -35,13 +34,17 @@
       width: 30px;
       aspect-ratio: 1/1;
 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
       font-size: 1.2rem;
 
       cursor: pointer;
 
-      background: rgb(255, 255, 255);
-      border: 1px solid rgb(188, 188, 188);
-      color: rgb(50, 50, 50);
+      background: var(--primary-color);
+      border: 1px solid var(--text-color);
+      color: var(--text-color);
       border-radius: 50%;
     }
   }
@@ -52,8 +55,6 @@
     align-items: flex-end;
 
     & .modal-container {
-      width: 350px;
-
       border-bottom: none;
 
       animation: slide-up 0.4s;

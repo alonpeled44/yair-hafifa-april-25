@@ -3,17 +3,21 @@ import usePokemon from "@/hooks/usePokemon";
 import Modal from "@/components/Modal";
 import Select from "@/components/Select";
 import PokemonCard from "@/components/PokemonCard";
+import backgroundImage from "@/assets/images/charmander.jpg";
+import darkBackgroundImage from "@/assets/images/charmanderDark.jpg";
+import infoCard from "@/assets/images/infoCard.png";
+import infoCardDark from "@/assets/images/infoCardDark.png";
 import styles from "@/styles/pages/index.module.css";
 
 const attributes = ["id", "name", "weight", "height"];
 
-export default function Home() {
+export default function Home({ theme }) {
   const { getPokemons, getTypes } = usePokemon();
 
   const [pokemons, setPokemons] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isShiny, setIsShiny] = useState(false);
 
   const [searchText, setSearchText] = useState("");
@@ -36,13 +40,20 @@ export default function Home() {
   }, []);
 
   const handleModalClose = () => {
-    setModalIsOpen(false);
+    setIsModalOpen(false);
     setSelectedPokemon(null);
     setIsShiny(false);
   };
 
   return (
-    <div className={styles["pokedex-wrapper"]}>
+    <div
+      className={styles["pokedex-wrapper"]}
+      style={{
+        backgroundImage: `url(${
+          theme === "dark" ? darkBackgroundImage.src : backgroundImage.src
+        })`,
+      }}
+    >
       <div className={styles["pokemon-cards-container"]}>
         <section className={styles["pokemon-card-organizer"]}>
           <input
@@ -102,18 +113,26 @@ export default function Home() {
                 types={pokemon.types}
                 weight={pokemon.weight}
                 height={pokemon.height}
+                theme={theme}
                 onClick={() => {
                   setSelectedPokemon(pokemon);
-                  setModalIsOpen(true);
+                  setIsModalOpen(true);
                 }}
               />
             ))}
         </section>
       </div>
 
-      {modalIsOpen && (
-        <Modal isOpen={modalIsOpen} handleClose={handleModalClose}>
-          <div className={styles["modal-content-wrapper"]}>
+      {isModalOpen && (
+        <Modal isOpen={isModalOpen} handleClose={handleModalClose}>
+          <div
+            className={styles["modal-content-wrapper"]}
+            style={{
+              backgroundImage: `url(${
+                theme === "dark" ? infoCardDark.src : infoCard.src
+              })`,
+            }}
+          >
             <div className={styles["modal-header"]}>
               <p id={styles["pokemon-name"]}>{selectedPokemon.name}</p>
 
@@ -137,7 +156,6 @@ export default function Home() {
                       ? selectedPokemon.frontShinyViewImageUrl
                       : selectedPokemon.frontViewImageUrl
                   }
-                  alt="pokemon image"
                 />
                 <img
                   src={
@@ -145,7 +163,6 @@ export default function Home() {
                       ? selectedPokemon.backShinyViewImageUrl
                       : selectedPokemon.backViewImageUrl
                   }
-                  alt="pokemon's back image"
                 />
               </section>
 

@@ -1,4 +1,6 @@
 import { useWindowWidth } from "@/contexts/WindowWidthProvider";
+import backgroundImage from "@/assets/images/PokemonCardBackground.jpg";
+import darkBackgroundImage from "@/assets/images/PokemonCardBackgroundDark.png";
 import styles from "@/styles/components/pokemon-card.module.css";
 
 export default function PokemonCard({
@@ -9,11 +11,20 @@ export default function PokemonCard({
   weight,
   height,
   onClick,
+  theme,
 }) {
   const windowWidth = useWindowWidth();
 
   return (
-    <div className={styles["pokemon-card"]} onClick={onClick}>
+    <div
+      className={styles["pokemon-card"]}
+      onClick={onClick}
+      style={{
+        backgroundImage: `url(${
+          theme === "dark" ? darkBackgroundImage.src : backgroundImage.src
+        })`,
+      }}
+    >
       <div className={styles["card-content"]}>
         <h1>{`${name} #${id}`}</h1>
         <img alt="pokemon image" src={img} />
