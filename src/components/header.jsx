@@ -8,6 +8,7 @@ import Setting from "./Setting";
 import Link from "next/link";
 import pokemonLogo from "@/assets/images/pokemon-logo.png";
 import settingsIcon from "@/assets/images/settings.png";
+import settingsIconDark from "@/assets/images/settingsDark.png";
 import styles from "@/styles/components/header.module.css";
 
 const themes = ["light", "dark"];
@@ -24,10 +25,14 @@ const fonts = {
   large: "🗛",
 };
 
-export default function Header({ newUsersDefaultPage }) {
+export default function Header({
+  newUsersDefaultPage,
+  theme,
+  setTheme,
+  font,
+  setFont,
+}) {
   const [username, setUsername] = useState("");
-  const [theme, setTheme] = useState(themes[0]);
-  const [fontSize, setFontSize] = useState(fontSizes[0]);
   const [isFontExtensionOpen, setIsFontExtensionOpen] = useState(false);
 
   const windowWidth = useWindowWidth();
@@ -39,7 +44,7 @@ export default function Header({ newUsersDefaultPage }) {
   const router = useRouter();
 
   function handleFontSizeSelection(newFontSize) {
-    setFontSize(newFontSize);
+    setFont(newFontSize);
     setIsFontExtensionOpen(false);
   }
 
@@ -81,7 +86,10 @@ export default function Header({ newUsersDefaultPage }) {
         <div className={styles.right}>
           <p>{new Date().toLocaleDateString("he-IL")}</p>
           <button onClick={() => setIsModalOpen((prev) => !prev)}>
-            <img src={settingsIcon.src} alt="settings Icon" />
+            <img
+              src={theme === "dark" ? settingsIconDark.src : settingsIcon.src}
+              alt="settings Icon"
+            />
           </button>
 
           {isModalOpen && windowWidth <= 480 && (
@@ -97,15 +105,15 @@ export default function Header({ newUsersDefaultPage }) {
                 onClick={() => {
                   setIsFontExtensionOpen((prev) => !prev);
                 }}
-                data-font-size={fontSize}
+                data-font-size={font}
               >
-                <span>{fonts[fontSize]}</span>
+                <span>{fonts[font]}</span>
               </button>
 
               {isFontExtensionOpen && (
                 <div className={styles["font-sizes"]}>
                   {fontSizes.reduce((acc, curFontSize) => {
-                    if (curFontSize !== fontSize) {
+                    if (curFontSize !== font) {
                       acc.push(
                         <button
                           key={curFontSize}
@@ -144,8 +152,8 @@ export default function Header({ newUsersDefaultPage }) {
               title="Fonts"
               groupName={"font-sizes"}
               options={fonts}
-              selected={fontSize}
-              onClick={(fontSize) => setFontSize(fontSize)}
+              selected={font}
+              onClick={(font) => setFont(font)}
             />
           </div>
         </Modal>

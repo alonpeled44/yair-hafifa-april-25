@@ -6,8 +6,6 @@
 
   padding-inline: 15%;
 
-  background-image: url("../../assets/images/charmander.jpg");
-
   & .pokemon-cards-container {
     width: 0px;
     flex: 1 1 auto;
@@ -34,7 +32,8 @@
         border-radius: 20px;
         outline: none;
 
-        border-bottom: solid 2px rgb(0, 0, 0);
+        background-color: var(--primary-color);
+        border-bottom: solid 2px var(--text-color);
       }
 
       &::placeholder {
@@ -51,9 +50,9 @@
 
           width: 110px;
 
-          color: rgb(0, 0, 0);
-          background-color: rgb(255, 255, 255);
-          border: 1px solid rgb(0, 0, 0);
+          color: var(--text-color);
+          background-color: var(--primary-color);
+          border: 1px solid var(--text-color);
           border-radius: 20px;
           padding-inline: 5px;
 
@@ -81,6 +80,23 @@
       gap: 25px;
 
       overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: 8px;
+        background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--primary-color);
+        border-radius: 10px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      scrollbar-color: var(--primary-color) transparent;
+      scrollbar-width: thin;
     }
   }
 
@@ -94,10 +110,10 @@
     flex-direction: column;
     align-items: center;
 
-    background-image: url("../../assets/images/InfoCard.png");
-
     border: none;
     font-size: 1.8rem;
+
+    color: rgb(0, 0, 0);
 
     & .modal-header {
       width: 100%;
@@ -159,6 +175,7 @@
     & .pokemon-cards-container {
       & .pokemon-card-organizer {
         justify-content: space-around;
+
         & .search-bar {
           width: 130px;
         }
@@ -174,6 +191,7 @@
         gap: 5px;
       }
     }
+
     & .modal-content-wrapper {
       width: 350px;
       aspect-ratio: 1/1;

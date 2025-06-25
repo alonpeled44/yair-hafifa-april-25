@@ -3,11 +3,15 @@ import usePokemon from "@/hooks/usePokemon";
 import Modal from "@/components/Modal";
 import Select from "@/components/Select";
 import PokemonCard from "@/components/PokemonCard";
+import backgroundImage from "@/assets/images/charmander.jpg";
+import darkBackgroundImage from "@/assets/images/charmanderDark.jpg";
+import infoCard from "@/assets/images/infoCard.png";
+import infoCardDark from "@/assets/images/infoCardDark.png";
 import styles from "@/styles/pages/index.module.css";
 
 const attributes = ["id", "name", "weight", "height"];
 
-export default function Home() {
+export default function Home({ theme }) {
   const { getPokemons, getTypes } = usePokemon();
 
   const [pokemons, setPokemons] = useState([]);
@@ -42,7 +46,14 @@ export default function Home() {
   };
 
   return (
-    <div className={styles["pokedex-wrapper"]}>
+    <div
+      className={styles["pokedex-wrapper"]}
+      style={{
+        backgroundImage: `url(${
+          theme === "dark" ? darkBackgroundImage.src : backgroundImage.src
+        })`,
+      }}
+    >
       <div className={styles["pokemon-cards-container"]}>
         <section className={styles["pokemon-card-organizer"]}>
           <input
@@ -102,6 +113,7 @@ export default function Home() {
                 types={pokemon.types}
                 weight={pokemon.weight}
                 height={pokemon.height}
+                theme={theme}
                 onClick={() => {
                   setSelectedPokemon(pokemon);
                   setIsModalOpen(true);
@@ -113,7 +125,14 @@ export default function Home() {
 
       {isModalOpen && (
         <Modal isOpen={isModalOpen} handleClose={handleModalClose}>
-          <div className={styles["modal-content-wrapper"]}>
+          <div
+            className={styles["modal-content-wrapper"]}
+            style={{
+              backgroundImage: `url(${
+                theme === "dark" ? infoCardDark.src : infoCard.src
+              })`,
+            }}
+          >
             <div className={styles["modal-header"]}>
               <p id={styles["pokemon-name"]}>{selectedPokemon.name}</p>
 
