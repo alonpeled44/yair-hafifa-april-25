@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import usePokemon from "@/hooks/usePokemon";
-import Modal from "@/components/Modal";
-import Select from "@/components/Select";
-import PokemonCard from "@/components/PokemonCard";
+import usePokemon from "../hooks/usePokemon";
+import Modal from "../components/Modal";
+import Select from "../components/Select";
+import PokemonCard from "../components/PokemonCard";
 import backgroundImage from "@/assets/images/charmander.jpg";
 import darkBackgroundImage from "@/assets/images/charmanderDark.jpg";
 import infoCard from "@/assets/images/infoCard.png";

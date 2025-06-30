@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
-import { useWindowWidth } from "@/contexts/WindowWidthProvider";
+import { useWindowWidth } from "../contexts/WindowWidthProvider";
+import { Themes, FontSize } from "../lib/enums";
 import VerticalDivider from "./VerticalDivider";
 import Modal from "./Modal";
 import Setting from "./Setting";
@@ -11,19 +12,26 @@ import settingsIcon from "@/assets/images/settings.png";
 import settingsIconDark from "@/assets/images/settingsDark.png";
 import styles from "@/styles/components/header.module.css";
 
-const themes = ["light", "dark"];
-const fontSizes = ["small", "medium", "large"];
+interface HeaderProps {
+  newUsersDefaultPage: string;
+  theme: Themes;
+  setTheme: (theme: Themes) => void;
+  font: FontSize;
+  setFont: (font: FontSize) => void;
+}
 
-const lightmodes = {
+const lightmodes: Record<Themes, string> = {
   light: "☀️",
   dark: "🌙",
 };
 
-const fonts = {
+const fonts: Record<FontSize, string> = {
   small: "🗛",
   medium: "🗛",
   large: "🗛",
 };
+
+const fontSizes: FontSize[] = Object.values(FontSize);
 
 export default function Header({
   newUsersDefaultPage,
@@ -31,25 +39,23 @@ export default function Header({
   setTheme,
   font,
   setFont,
-}) {
-  const [username, setUsername] = useState("");
+}: HeaderProps) {
+  const [username, setUsername] = useState<string | null>("");
   const [isFontExtensionOpen, setIsFontExtensionOpen] = useState(false);
 
   const windowWidth = useWindowWidth();
-
   const pathname = usePathname();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const router = useRouter();
 
-  function handleFontSizeSelection(newFontSize) {
+  function handleFontSizeSelection(newFontSize: FontSize) {
     setFont(newFontSize);
     setIsFontExtensionOpen(false);
   }
 
   useEffect(() => {
-    setUsername(localStorage.getItem("username"));
+    const storedUsername = localStorage.getItem("username");
+    setUsername(storedUsername);
   }, [pathname]);
 
   return (
@@ -96,7 +102,7 @@ export default function Header({
             <div className={styles["settings-dropdown"]}>
               <button
                 onClick={() =>
-                  setTheme((prev) => (prev === "light" ? "dark" : "light"))
+                  setTheme(theme === Themes.LIGHT ? Themes.DARK : Themes.LIGHT)
                 }
               >
                 {lightmodes[theme]}
@@ -112,20 +118,17 @@ export default function Header({
 
               {isFontExtensionOpen && (
                 <div className={styles["font-sizes"]}>
-                  {fontSizes.reduce((acc, curFontSize) => {
-                    if (curFontSize !== font) {
-                      acc.push(
-                        <button
-                          key={curFontSize}
-                          onClick={() => handleFontSizeSelection(curFontSize)}
-                          data-font-size={curFontSize}
-                        >
-                          <span>{fonts[curFontSize]}</span>
-                        </button>
-                      );
-                    }
-                    return acc;
-                  }, [])}
+                  {fontSizes.map((curFontSize) =>
+                    curFontSize !== font ? (
+                      <button
+                        key={curFontSize}
+                        onClick={() => handleFontSizeSelection(curFontSize)}
+                        data-font-size={curFontSize}
+                      >
+                        <span>{fonts[curFontSize]}</span>
+                      </button>
+                    ) : null
+                  )}
                 </div>
               )}
             </div>
@@ -143,17 +146,17 @@ export default function Header({
           <div className={styles["modal-content-wrapper"]}>
             <Setting
               title="Theme"
-              groupName={"themes"}
+              groupName="themes"
               options={lightmodes}
               selected={theme}
-              onClick={(theme) => setTheme(theme)}
+              onClick={(selectedTheme) => setTheme(selectedTheme as Themes)}
             />
             <Setting
               title="Fonts"
-              groupName={"font-sizes"}
+              groupName="font-sizes"
               options={fonts}
               selected={font}
-              onClick={(font) => setFont(font)}
+              onClick={(selectedFont) => setFont(selectedFont as FontSize)}
             />
           </div>
         </Modal>

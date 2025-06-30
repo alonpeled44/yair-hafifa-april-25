@@ -1,4 +1,4 @@
-import { useWindowWidth } from "@/contexts/WindowWidthProvider";
+import { useWindowWidth } from "../contexts/WindowWidthProvider";
 import backgroundImage from "@/assets/images/PokemonCardBackground.jpg";
 import darkBackgroundImage from "@/assets/images/PokemonCardBackgroundDark.png";
 import styles from "@/styles/components/pokemon-card.module.css";

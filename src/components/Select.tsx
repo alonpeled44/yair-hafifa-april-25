@@ -55,7 +55,8 @@ export default function Select({
                   key={index}
                   value={option}
                   onClick={(e) => {
-                    setCheckedOptions(e.target.value);
+                    const target = e.target as HTMLInputElement;
+                    setCheckedOptions(target.value);
                   }}
                 />
               )}
