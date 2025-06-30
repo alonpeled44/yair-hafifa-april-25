@@ -7,10 +7,10 @@ import VerticalDivider from "./VerticalDivider";
 import Modal from "./Modal";
 import Setting from "./Setting";
 import Link from "next/link";
-import pokemonLogo from "@/assets/images/pokemon-logo.png";
-import settingsIcon from "@/assets/images/settings.png";
-import settingsIconDark from "@/assets/images/settingsDark.png";
-import styles from "@/styles/components/header.module.css";
+import pokemonLogo from "../assets/images/pokemon-logo.png";
+import settingsIcon from "../assets/images/settings.png";
+import settingsIconDark from "../assets/images/settingsDark.png";
+import styles from "../styles/components/header.module.css";
 
 interface HeaderProps {
   newUsersDefaultPage: string;

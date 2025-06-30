@@ -5,7 +5,7 @@ import WindowWidthProvider from "../contexts/WindowWidthProvider";
 import { users } from "../lib/users";
 import Header from "../components/header";
 import { Themes, FontSize } from "../lib/enums";
-import "@/styles/globals.css";
+import "../styles/globals.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState<Themes>(Themes.LIGHT);
@@ -14,7 +14,6 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const newUsersDefaultPage = "/login";
 
-  // Load theme and font from localStorage on first render
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
     if (storedTheme === Themes.DARK || storedTheme === Themes.LIGHT) {
@@ -31,7 +30,6 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, []);
 
-  // Redirect based on saved username
   useEffect(() => {
     const savedUsername = localStorage.getItem("username");
     const currentUser = users.find(
@@ -42,7 +40,6 @@ export default function App({ Component, pageProps }: AppProps) {
     else router.push(newUsersDefaultPage);
   }, []);
 
-  // Update body classes and localStorage when theme or font changes
   useEffect(() => {
     document.body.classList.remove("light", "dark");
     document.body.classList.add(theme);

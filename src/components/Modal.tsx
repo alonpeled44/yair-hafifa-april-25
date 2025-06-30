@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import { useWindowWidth } from "../contexts/WindowWidthProvider";
-import styles from "@/styles/components/modal.module.css";
+import styles from "../styles/components/modal.module.css";
 
 export default function Modal({ children, isOpen, handleClose }) {
   const dialogRef = useRef(null);
