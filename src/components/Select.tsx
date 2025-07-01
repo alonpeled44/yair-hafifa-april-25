@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import styles from "@/styles/components/select.module.css";
+import styles from "../styles/components/select.module.css";
 
 export default function Select({
   multiple,

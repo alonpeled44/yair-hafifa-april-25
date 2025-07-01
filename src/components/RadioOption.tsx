@@ -1,4 +1,4 @@
-import styles from "@/styles/components/radio-option.module.css";
+import styles from "../styles/components/radio-option.module.css";
 
 export default function RadioOption({
   text,
