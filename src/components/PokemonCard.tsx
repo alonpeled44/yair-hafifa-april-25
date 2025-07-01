@@ -1,18 +1,9 @@
 import { useWindowWidth } from "../contexts/WindowWidthProvider";
-import backgroundImage from "../assets/images/PokemonCardBackground.jpg";
-import darkBackgroundImage from "../assets/images/PokemonCardBackgroundDark.png";
-import styles from "../styles/components/pokemon-card.module.css";
+import backgroundImage from "@/assets/images/PokemonCardBackground.jpg";
+import darkBackgroundImage from "@/assets/images/PokemonCardBackgroundDark.png";
+import styles from "@/styles/components/pokemon-card.module.css";
 
-export default function PokemonCard({
-  id,
-  name,
-  img,
-  types,
-  weight,
-  height,
-  onClick,
-  theme,
-}) {
+export default function PokemonCard({ id, name, img, types, onClick, theme }) {
   const windowWidth = useWindowWidth();
 
   return (
@@ -32,8 +23,6 @@ export default function PokemonCard({
         {windowWidth > 480 && (
           <div className={styles.attributes}>
             <p>type: {types.join(", ")}</p>
-            <p>weight: {weight}</p>
-            <p>height: {height}</p>
           </div>
         )}
       </div>

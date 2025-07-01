@@ -1,5 +1,5 @@
 import RadioOption from "./RadioOption";
-import styles from "../styles/components/setting.module.css";
+import styles from "@/styles/components/setting.module.css";
 
 export default function Setting({
   title,

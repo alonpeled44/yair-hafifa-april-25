@@ -9,7 +9,8 @@ import infoCard from "../assets/images/infoCard.png";
 import infoCardDark from "../assets/images/infoCardDark.png";
 import styles from "../styles/pages/index.module.css";
 
-const attributes = ["id", "name", "weight", "height"];
+// Updated attributes without weight and height
+const attributes = ["id", "name"];
 
 export default function Home({ theme }) {
   const { getPokemons, getTypes } = usePokemon();
@@ -29,11 +30,18 @@ export default function Home({ theme }) {
 
   useEffect(() => {
     async function init() {
+      console.log("Starting to fetch data...");
+
       const pokemons = await getPokemons();
       const types = await getTypes();
 
-      setPokemons(pokemons);
-      setTypes(types);
+      console.log("Raw pokemons data:", pokemons);
+      console.log("Raw types data:", types);
+      console.log("Pokemons type:", typeof pokemons);
+      console.log("Is pokemons array?", Array.isArray(pokemons));
+
+      setPokemons(pokemons || []);
+      setTypes(types || []);
     }
 
     init();
@@ -44,6 +52,24 @@ export default function Home({ theme }) {
     setSelectedPokemon(null);
     setIsShiny(false);
   };
+
+  // Add loading check
+  if (!pokemons || pokemons.length === 0) {
+    return (
+      <div
+        className={styles["pokedex-wrapper"]}
+        style={{
+          backgroundImage: `url(${
+            theme === "dark" ? darkBackgroundImage.src : backgroundImage.src
+          })`,
+        }}
+      >
+        <div style={{ padding: "20px", color: "white", textAlign: "center" }}>
+          Loading Digimons...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -58,7 +84,7 @@ export default function Home({ theme }) {
         <section className={styles["pokemon-card-organizer"]}>
           <input
             type="text"
-            placeholder="Search card"
+            placeholder="Search digimon"
             className={styles["search-bar"]}
             name="searchText"
             value={searchText}
@@ -86,14 +112,13 @@ export default function Home({ theme }) {
           {pokemons
             .filter(
               (pokemon) =>
+                // Updated filter to remove weight and height searches
                 ((searchText.includes("#") &&
                   pokemon.id.toString() ===
                     searchText.trim().replace("#", "")) ||
                   pokemon.name
                     .toLowerCase()
-                    .includes(searchText.trim().toLowerCase()) ||
-                  pokemon.weight.toString().includes(searchText) ||
-                  pokemon.height.toString().includes(searchText)) &&
+                    .includes(searchText.trim().toLowerCase())) &&
                 (selectedTypes.length < 1 ||
                   pokemon.types.some((e) => selectedTypes.includes(e)))
             )
@@ -106,13 +131,12 @@ export default function Home({ theme }) {
             })
             .map((pokemon, index) => (
               <PokemonCard
-                key={index}
+                key={pokemon.id}
                 id={pokemon.id}
                 name={pokemon.name}
                 img={pokemon.frontViewImageUrl}
                 types={pokemon.types}
-                weight={pokemon.weight}
-                height={pokemon.height}
+                // Remove weight and height props since digimons don't have them
                 theme={theme}
                 onClick={() => {
                   setSelectedPokemon(pokemon);
@@ -123,7 +147,7 @@ export default function Home({ theme }) {
         </section>
       </div>
 
-      {isModalOpen && (
+      {isModalOpen && selectedPokemon && (
         <Modal isOpen={isModalOpen} handleClose={handleModalClose}>
           <div
             className={styles["modal-content-wrapper"]}
@@ -140,9 +164,9 @@ export default function Home({ theme }) {
                 <input
                   id="shiny"
                   type="checkbox"
-                  onClick={() => setIsShiny((prev) => !prev)}
-                ></input>
-                shiny
+                  onChange={() => setIsShiny((prev) => !prev)}
+                />
+                variant
               </label>
 
               <p>#{selectedPokemon.id}</p>
@@ -156,6 +180,7 @@ export default function Home({ theme }) {
                       ? selectedPokemon.frontShinyViewImageUrl
                       : selectedPokemon.frontViewImageUrl
                   }
+                  alt={`${selectedPokemon.name} front`}
                 />
                 <img
                   src={
@@ -163,13 +188,17 @@ export default function Home({ theme }) {
                       ? selectedPokemon.backShinyViewImageUrl
                       : selectedPokemon.backViewImageUrl
                   }
+                  alt={`${selectedPokemon.name} back`}
                 />
               </section>
 
               <section className={styles["pokemon-data"]}>
                 <p>type: {selectedPokemon.types.join(", ")}</p>
-                <p>weight: {selectedPokemon.weight}</p>
-                <p>height: {selectedPokemon.height}</p>
+                {selectedPokemon.level && <p>level: {selectedPokemon.level}</p>}
+                {selectedPokemon.attribute && (
+                  <p>attribute: {selectedPokemon.attribute}</p>
+                )}
+                {/* Removed weight and height since digimons don't have them */}
               </section>
             </div>
           </div>
