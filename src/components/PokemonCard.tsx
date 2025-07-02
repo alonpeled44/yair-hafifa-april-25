@@ -1,9 +1,26 @@
 import { useWindowWidth } from "../contexts/WindowWidthProvider";
+import { Themes } from "../lib/enums";
 import backgroundImage from "../assets/images/PokemonCardBackground.jpg";
 import darkBackgroundImage from "../assets/images/PokemonCardBackgroundDark.png";
 import styles from "../styles/components/pokemon-card.module.css";
 
-export default function PokemonCard({ id, name, img, types, onClick, theme }) {
+interface PokemonCard {
+  id: number;
+  name: string;
+  img: string;
+  types: Array<string>;
+  onClick: () => void;
+  theme: Themes;
+}
+
+export default function PokemonCard({
+  id,
+  name,
+  img,
+  types,
+  onClick,
+  theme,
+}: PokemonCard) {
   const windowWidth = useWindowWidth();
 
   return (

@@ -1,26 +1,45 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/components/select.module.css";
 
-export default function Select({
+type SetStateType<T> = React.Dispatch<React.SetStateAction<T>>;
+
+type SelectProps<T extends string | string[]> = {
+  multiple: boolean;
+  options: string[];
+  checkedOptions: T;
+  setCheckedOptions: SetStateType<T>;
+};
+
+export default function Select<T extends string | string[]>({
   multiple,
   options = [],
   checkedOptions,
   setCheckedOptions,
-}) {
+}: SelectProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  const handleCheckboxChange = (option) => {
-    setCheckedOptions((prevCheckedOptions) =>
-      prevCheckedOptions.includes(option)
-        ? prevCheckedOptions.filter((type) => type !== option)
-        : [...prevCheckedOptions, option]
-    );
+  const handleCheckboxChange = (option: string) => {
+    if (multiple) {
+      setCheckedOptions((prevCheckedOptions) => {
+        const prev = prevCheckedOptions as string[];
+        if (prev.includes(option)) {
+          return prev.filter((o) => o !== option) as T;
+        } else {
+          return [...prev, option] as T;
+        }
+      });
+    } else {
+      setCheckedOptions(option as T);
+    }
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -56,7 +75,7 @@ export default function Select({
                   value={option}
                   onClick={(e) => {
                     const target = e.target as HTMLInputElement;
-                    setCheckedOptions(target.value);
+                    handleCheckboxChange(target.value);
                   }}
                 />
               )}

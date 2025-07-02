@@ -147,16 +147,16 @@ export default function Header({
             <Setting
               title="Theme"
               groupName="themes"
-              options={lightmodes}
+              options={Object.keys(lightmodes)}
               selected={theme}
-              onClick={(selectedTheme) => setTheme(selectedTheme as Themes)}
+              onClick={(value: string) => setTheme(value as Themes)}
             />
             <Setting
               title="Fonts"
               groupName="font-sizes"
-              options={fonts}
+              options={Object.keys(fonts)}
               selected={font}
-              onClick={(selectedFont) => setFont(selectedFont as FontSize)}
+              onClick={(value: string) => setFont(value as FontSize)}
             />
           </div>
         </Modal>

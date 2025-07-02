@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { Pokemon } from "../lib/types";
 
 export default function usePokemon() {
-  const [typesCache, setTypesCache] = useState(null);
-  const [pokemonsCache, setPokemonsCache] = useState(null);
+  const [typesCache, setTypesCache] = useState<string[] | null>(null);
+  const [pokemonsCache, setPokemonsCache] = useState<Pokemon[] | null>(null);
 
   async function getPokemons() {
     if (pokemonsCache) return pokemonsCache;
@@ -24,7 +25,7 @@ export default function usePokemon() {
       console.log("API response:", data); // Debug log
 
       // Fixed: Changed from data.pokemons.pokemons to data.pokemons
-      const pokemons = data.pokemons;
+      const pokemons: Pokemon[] = data.pokemons;
       setPokemonsCache(pokemons);
 
       return pokemons;

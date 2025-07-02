@@ -1,14 +1,23 @@
 import { useRef, useEffect } from "react";
 import { useWindowWidth } from "../contexts/WindowWidthProvider";
+import { ReactNode } from "react";
 import styles from "../styles/components/modal.module.css";
 
-export default function Modal({ children, isOpen, handleClose }) {
-  const dialogRef = useRef(null);
+interface ModalProps {
+  children: ReactNode;
+  isOpen: boolean;
+  handleClose: () => void;
+}
+
+export default function Modal({ children, isOpen, handleClose }: ModalProps) {
+  const dialogRef = useRef<null | HTMLDialogElement>(null);
 
   const windowWidth = useWindowWidth();
 
   useEffect(() => {
     const dialog = dialogRef.current;
+
+    if (!dialog) return;
 
     if (isOpen) {
       dialog.close();
@@ -23,11 +32,11 @@ export default function Modal({ children, isOpen, handleClose }) {
       return;
     }
 
-    const exitOnBackgroundClick = (event) => {
+    const exitOnBackgroundClick = (event: MouseEvent) => {
       if (event.target === dialog) handleClose();
     };
 
-    const exitOnEscape = (event) => {
+    const exitOnEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") handleClose();
     };
 

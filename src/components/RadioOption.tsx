@@ -1,12 +1,20 @@
 import styles from "../styles/components/radio-option.module.css";
 
+interface RadioOptionProps {
+  text: string;
+  value: string;
+  groupName: string;
+  onClick: () => void;
+  isSelected: boolean;
+}
+
 export default function RadioOption({
   text,
   value,
   groupName,
   onClick,
   isSelected,
-}) {
+}: RadioOptionProps) {
   return (
     <label className={styles.label}>
       <input

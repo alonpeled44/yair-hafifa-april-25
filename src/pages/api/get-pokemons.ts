@@ -1,4 +1,9 @@
-export default async function handler(req, res) {
+import type { NextApiRequest, NextApiResponse } from "next";
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== "GET") {
     return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
   }
@@ -6,10 +11,8 @@ export default async function handler(req, res) {
   try {
     console.log("Fetching digimons from digi-api.com...");
 
-    // Fetch individual digimons using the correct endpoint format
     const individualPromises = [];
 
-    // Fetch first 100 digimons by ID (since you confirmed the endpoint works)
     for (let i = 1; i <= 100; i++) {
       individualPromises.push(
         fetch(`https://digi-api.com/api/v1/digimon/${i}`)

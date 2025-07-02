@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Themes } from "../lib/enums";
 import usePokemon from "../hooks/usePokemon";
 import Modal from "../components/Modal";
 import Select from "../components/Select";
@@ -8,25 +9,30 @@ import darkBackgroundImage from "../assets/images/charmanderDark.jpg";
 import infoCard from "../assets/images/infoCard.png";
 import infoCardDark from "../assets/images/infoCardDark.png";
 import styles from "../styles/pages/index.module.css";
+import { Pokemon } from "../lib/types";
 
 // Updated attributes without weight and height
 const attributes = ["id", "name"];
 
-export default function Home({ theme }) {
+interface HomeProps {
+  theme: Themes;
+}
+
+export default function Home({ theme }: HomeProps) {
   const { getPokemons, getTypes } = usePokemon();
 
-  const [pokemons, setPokemons] = useState([]);
-  const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isShiny, setIsShiny] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isShiny, setIsShiny] = useState<boolean>(false);
 
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState<string>("");
 
-  const [attributeSort, setAttributeSort] = useState("id");
+  const [attributeSort, setAttributeSort] = useState<string>("id");
 
-  const [selectedTypes, setSelectedTypes] = useState([]);
-  const [types, setTypes] = useState([]);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [types, setTypes] = useState<string[]>([]);
 
   useEffect(() => {
     async function init() {
@@ -53,7 +59,6 @@ export default function Home({ theme }) {
     setIsShiny(false);
   };
 
-  // Add loading check
   if (!pokemons || pokemons.length === 0) {
     return (
       <div
@@ -112,7 +117,6 @@ export default function Home({ theme }) {
           {pokemons
             .filter(
               (pokemon) =>
-                // Updated filter to remove weight and height searches
                 ((searchText.includes("#") &&
                   pokemon.id.toString() ===
                     searchText.trim().replace("#", "")) ||
@@ -126,7 +130,10 @@ export default function Home({ theme }) {
               if (attributeSort === "name") {
                 return a.name.localeCompare(b.name);
               } else {
-                return a[attributeSort] - b[attributeSort];
+                return (
+                  (a[attributeSort as keyof Pokemon] as number) -
+                  (b[attributeSort as keyof Pokemon] as number)
+                );
               }
             })
             .map((pokemon, index) => (
@@ -136,7 +143,6 @@ export default function Home({ theme }) {
                 name={pokemon.name}
                 img={pokemon.frontViewImageUrl}
                 types={pokemon.types}
-                // Remove weight and height props since digimons don't have them
                 theme={theme}
                 onClick={() => {
                   setSelectedPokemon(pokemon);
@@ -194,11 +200,6 @@ export default function Home({ theme }) {
 
               <section className={styles["pokemon-data"]}>
                 <p>type: {selectedPokemon.types.join(", ")}</p>
-                {selectedPokemon.level && <p>level: {selectedPokemon.level}</p>}
-                {selectedPokemon.attribute && (
-                  <p>attribute: {selectedPokemon.attribute}</p>
-                )}
-                {/* Removed weight and height since digimons don't have them */}
               </section>
             </div>
           </div>
