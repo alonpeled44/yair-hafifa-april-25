@@ -1,6 +1,5 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, ReactNode } from "react";
 import { useWindowWidth } from "../contexts/WindowWidthProvider";
-import { ReactNode } from "react";
 import styles from "../styles/components/modal.module.css";
 
 interface Props {
