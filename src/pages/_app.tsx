@@ -4,11 +4,11 @@ import type { AppProps } from "next/app";
 import WindowWidthProvider from "../contexts/WindowWidthProvider";
 import { users } from "../lib/users";
 import Header from "../components/header";
-import { Themes, FontSize } from "../lib/enums";
+import { Theme, FontSize } from "../lib/enums";
 import "../styles/globals.css";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [theme, setTheme] = useState<Themes>(Themes.LIGHT);
+  const [theme, setTheme] = useState<Theme>(Theme.LIGHT);
   const [font, setFont] = useState<FontSize>(FontSize.MEDIUM);
 
   const router = useRouter();
@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === Themes.DARK || storedTheme === Themes.LIGHT) {
+    if (storedTheme === Theme.DARK || storedTheme === Theme.LIGHT) {
       setTheme(storedTheme);
     }
 
