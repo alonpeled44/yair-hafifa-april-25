@@ -3,13 +3,13 @@ import { useWindowWidth } from "../contexts/WindowWidthProvider";
 import { ReactNode } from "react";
 import styles from "../styles/components/modal.module.css";
 
-interface ModalProps {
+interface Props {
   children: ReactNode;
   isOpen: boolean;
   handleClose: () => void;
 }
 
-export default function Modal({ children, isOpen, handleClose }: ModalProps) {
+export default function Modal({ children, isOpen, handleClose }: Props) {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
 
   const windowWidth = useWindowWidth();

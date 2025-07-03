@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Themes } from "../lib/enums";
+import { Theme } from "../lib/enums";
 import usePokemon from "../hooks/usePokemon";
 import Modal from "../components/Modal";
 import Select from "../components/Select";
 import PokemonCard from "../components/PokemonCard";
-import { Pokemon, NumericPokemonKeys } from "../lib/types";
+import { Pokemon } from "../lib/types";
 import backgroundImage from "../assets/images/charmander.jpg";
 import darkBackgroundImage from "../assets/images/charmanderDark.jpg";
 import infoCard from "../assets/images/infoCard.png";
@@ -14,11 +14,11 @@ import styles from "../styles/pages/index.module.css";
 // Only "id" and "name" here, cast to string[] to avoid readonly errors
 const attributes = ["id", "name"] as string[];
 
-type SortableKey = NumericPokemonKeys | "name";
-
 interface Props {
-  theme: Themes;
+  theme: Theme;
 }
+
+type PokemonKey = keyof Pokemon;
 
 export default function Home({ theme }: Props) {
   const { getPokemons, getTypes } = usePokemon();
@@ -30,7 +30,7 @@ export default function Home({ theme }: Props) {
   const [isShiny, setIsShiny] = useState(false);
 
   const [searchText, setSearchText] = useState("");
-  const [attributeSort, setAttributeSort] = useState<SortableKey>("id");
+  const [attributeSort, setAttributeSort] = useState<PokemonKey>("id");
 
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [types, setTypes] = useState<string[]>([]);
@@ -121,7 +121,7 @@ export default function Home({ theme }: Props) {
 
               return matchesSearch && matchesTypes;
             })
-            .sort((a, b) => {
+            .sort((a: Pokemon, b: Pokemon) => {
               if (attributeSort === "name") {
                 return a.name.localeCompare(b.name);
               } else {

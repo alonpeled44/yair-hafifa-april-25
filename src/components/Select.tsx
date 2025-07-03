@@ -3,7 +3,7 @@ import styles from "../styles/components/select.module.css";
 
 type SetStateType<T> = React.Dispatch<React.SetStateAction<T>>;
 
-type SelectProps<T extends string | string[]> = {
+type Props<T extends string | string[]> = {
   multiple: boolean;
   options: string[];
   checkedOptions: T;
@@ -15,7 +15,7 @@ export default function Select<T extends string | string[]>({
   options = [],
   checkedOptions,
   setCheckedOptions,
-}: SelectProps<T>) {
+}: Props<T>) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 

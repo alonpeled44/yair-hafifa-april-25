@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
 import { useWindowWidth } from "../contexts/WindowWidthProvider";
-import { Themes, FontSize } from "../lib/enums";
+import { Theme, FontSize } from "../lib/enums";
 import VerticalDivider from "./VerticalDivider";
 import Modal from "./Modal";
 import Setting from "./Setting";
@@ -12,15 +12,15 @@ import settingsIcon from "../assets/images/settings.png";
 import settingsIconDark from "../assets/images/settingsDark.png";
 import styles from "../styles/components/header.module.css";
 
-interface HeaderProps {
+interface Props {
   newUsersDefaultPage: string;
-  theme: Themes;
-  setTheme: (theme: Themes) => void;
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
   font: FontSize;
   setFont: (font: FontSize) => void;
 }
 
-const lightmodes: Record<Themes, string> = {
+const lightmodes: Record<Theme, string> = {
   light: "☀️",
   dark: "🌙",
 };
@@ -39,7 +39,7 @@ export default function Header({
   setTheme,
   font,
   setFont,
-}: HeaderProps) {
+}: Props) {
   const [username, setUsername] = useState<string | null>("");
   const [isFontExtensionOpen, setIsFontExtensionOpen] = useState(false);
 
@@ -102,7 +102,7 @@ export default function Header({
             <div className={styles["settings-dropdown"]}>
               <button
                 onClick={() =>
-                  setTheme(theme === Themes.LIGHT ? Themes.DARK : Themes.LIGHT)
+                  setTheme(theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT)
                 }
               >
                 {lightmodes[theme]}
@@ -149,7 +149,7 @@ export default function Header({
               groupName="themes"
               options={Object.keys(lightmodes)}
               selected={theme}
-              onClick={(value: string) => setTheme(value as Themes)}
+              onClick={(value: string) => setTheme(value as Theme)}
             />
             <Setting
               title="Fonts"

@@ -1,16 +1,16 @@
 import { useWindowWidth } from "../contexts/WindowWidthProvider";
-import { Themes } from "../lib/enums";
+import { Theme } from "../lib/enums";
 import backgroundImage from "../assets/images/PokemonCardBackground.jpg";
 import darkBackgroundImage from "../assets/images/PokemonCardBackgroundDark.png";
 import styles from "../styles/components/pokemon-card.module.css";
 
-interface PokemonCardProps {
+interface Props {
   id: number;
   name: string;
   img: string;
   types: string[];
   onClick: () => void;
-  theme: Themes;
+  theme: Theme;
 }
 
 export default function PokemonCard({
@@ -20,7 +20,7 @@ export default function PokemonCard({
   types,
   onClick,
   theme,
-}: PokemonCardProps) {
+}: Props) {
   const windowWidth = useWindowWidth();
 
   return (
