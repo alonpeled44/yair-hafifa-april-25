@@ -10,7 +10,7 @@ interface ModalProps {
 }
 
 export default function Modal({ children, isOpen, handleClose }: ModalProps) {
-  const dialogRef = useRef<null | HTMLDialogElement>(null);
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
 
   const windowWidth = useWindowWidth();
 

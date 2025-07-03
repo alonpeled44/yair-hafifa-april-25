@@ -73,9 +73,11 @@ export default function Select<T extends string | string[]>({
                   type="button"
                   key={index}
                   value={option}
-                  onClick={(e) => {
-                    const target = e.target as HTMLInputElement;
-                    handleCheckboxChange(target.value);
+                  onClick={(e: React.MouseEvent<HTMLInputElement>) => {
+                    if (!e.target) return;
+                    const target = e.currentTarget.value as T;
+
+                    setCheckedOptions(target);
                   }}
                 />
               )}

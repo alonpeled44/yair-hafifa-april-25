@@ -6,6 +6,12 @@
 
   padding-inline: 15%;
 
+  .loading {
+    padding: "20px";
+    color: "white";
+    text-align: "center";
+  }
+
   & .pokemon-cards-container {
     width: 0px;
     flex: 1 1 auto;

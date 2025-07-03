@@ -4,52 +4,45 @@ import usePokemon from "../hooks/usePokemon";
 import Modal from "../components/Modal";
 import Select from "../components/Select";
 import PokemonCard from "../components/PokemonCard";
+import { Pokemon, NumericPokemonKeys } from "../lib/types";
 import backgroundImage from "../assets/images/charmander.jpg";
 import darkBackgroundImage from "../assets/images/charmanderDark.jpg";
 import infoCard from "../assets/images/infoCard.png";
 import infoCardDark from "../assets/images/infoCardDark.png";
 import styles from "../styles/pages/index.module.css";
-import { Pokemon } from "../lib/types";
 
-// Updated attributes without weight and height
-const attributes = ["id", "name"];
+// Only "id" and "name" here, cast to string[] to avoid readonly errors
+const attributes = ["id", "name"] as string[];
 
-interface HomeProps {
+type SortableKey = NumericPokemonKeys | "name";
+
+interface Props {
   theme: Themes;
 }
 
-export default function Home({ theme }: HomeProps) {
+export default function Home({ theme }: Props) {
   const { getPokemons, getTypes } = usePokemon();
 
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
 
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isShiny, setIsShiny] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isShiny, setIsShiny] = useState(false);
 
-  const [searchText, setSearchText] = useState<string>("");
-
-  const [attributeSort, setAttributeSort] = useState<string>("id");
+  const [searchText, setSearchText] = useState("");
+  const [attributeSort, setAttributeSort] = useState<SortableKey>("id");
 
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [types, setTypes] = useState<string[]>([]);
 
   useEffect(() => {
     async function init() {
-      console.log("Starting to fetch data...");
-
       const pokemons = await getPokemons();
       const types = await getTypes();
-
-      console.log("Raw pokemons data:", pokemons);
-      console.log("Raw types data:", types);
-      console.log("Pokemons type:", typeof pokemons);
-      console.log("Is pokemons array?", Array.isArray(pokemons));
 
       setPokemons(pokemons || []);
       setTypes(types || []);
     }
-
     init();
   }, []);
 
@@ -69,9 +62,7 @@ export default function Home({ theme }: HomeProps) {
           })`,
         }}
       >
-        <div style={{ padding: "20px", color: "white", textAlign: "center" }}>
-          Loading Digimons...
-        </div>
+        <div className={styles.loading}>Loading Digimons...</div>
       </div>
     );
   }
@@ -115,28 +106,31 @@ export default function Home({ theme }: HomeProps) {
 
         <section className={styles.cards}>
           {pokemons
-            .filter(
-              (pokemon) =>
-                ((searchText.includes("#") &&
+            .filter((pokemon) => {
+              const matchesSearch =
+                (searchText.includes("#") &&
                   pokemon.id.toString() ===
                     searchText.trim().replace("#", "")) ||
-                  pokemon.name
-                    .toLowerCase()
-                    .includes(searchText.trim().toLowerCase())) &&
-                (selectedTypes.length < 1 ||
-                  pokemon.types.some((e) => selectedTypes.includes(e)))
-            )
+                pokemon.name
+                  .toLowerCase()
+                  .includes(searchText.trim().toLowerCase());
+
+              const matchesTypes =
+                selectedTypes.length === 0 ||
+                pokemon.types.some((t) => selectedTypes.includes(t));
+
+              return matchesSearch && matchesTypes;
+            })
             .sort((a, b) => {
               if (attributeSort === "name") {
                 return a.name.localeCompare(b.name);
               } else {
                 return (
-                  (a[attributeSort as keyof Pokemon] as number) -
-                  (b[attributeSort as keyof Pokemon] as number)
+                  (a[attributeSort] as number) - (b[attributeSort] as number)
                 );
               }
             })
-            .map((pokemon, index) => (
+            .map((pokemon) => (
               <PokemonCard
                 key={pokemon.id}
                 id={pokemon.id}
@@ -170,7 +164,7 @@ export default function Home({ theme }: HomeProps) {
                 <input
                   id="shiny"
                   type="checkbox"
-                  onChange={() => setIsShiny((prev) => !prev)}
+                  onClick={() => setIsShiny((prev) => !prev)}
                 />
                 variant
               </label>

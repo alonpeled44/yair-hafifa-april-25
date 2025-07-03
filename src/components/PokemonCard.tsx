@@ -4,11 +4,11 @@ import backgroundImage from "../assets/images/PokemonCardBackground.jpg";
 import darkBackgroundImage from "../assets/images/PokemonCardBackgroundDark.png";
 import styles from "../styles/components/pokemon-card.module.css";
 
-interface PokemonCard {
+interface PokemonCardProps {
   id: number;
   name: string;
   img: string;
-  types: Array<string>;
+  types: string[];
   onClick: () => void;
   theme: Themes;
 }
@@ -20,7 +20,7 @@ export default function PokemonCard({
   types,
   onClick,
   theme,
-}: PokemonCard) {
+}: PokemonCardProps) {
   const windowWidth = useWindowWidth();
 
   return (
