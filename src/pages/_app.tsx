@@ -28,9 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
     ) {
       setFont(storedFont);
     }
-  }, []);
 
-  useEffect(() => {
     const savedUsername = localStorage.getItem("username");
     const currentUser = users.find(
       ({ userName }) => userName === savedUsername

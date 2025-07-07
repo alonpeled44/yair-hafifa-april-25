@@ -9,22 +9,15 @@ export default function usePokemon() {
     if (pokemonsCache) return pokemonsCache;
 
     try {
-      // Fixed: Changed endpoint to match your API file
-      const response = await fetch("/api/get-pokemons", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch("/api/get-pokemons", {});
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      console.log("API response:", data); // Debug log
+      console.log("API response:", data);
 
-      // Fixed: Changed from data.pokemons.pokemons to data.pokemons
       const pokemons: Pokemon[] = data.pokemons;
       setPokemonsCache(pokemons);
 
@@ -39,9 +32,7 @@ export default function usePokemon() {
     if (typesCache) return typesCache;
 
     try {
-      // Return actual Digimon levels, attributes, and types based on the API structure
       const digimonTypes = [
-        // Levels
         "Fresh",
         "In-Training",
         "Rookie",
@@ -51,13 +42,11 @@ export default function usePokemon() {
         "Child",
         "Adult",
         "Perfect",
-        // Attributes
         "Vaccine",
         "Data",
         "Virus",
         "Free",
         "Unknown",
-        // Common Types
         "Reptile",
         "Beast",
         "Bird",
