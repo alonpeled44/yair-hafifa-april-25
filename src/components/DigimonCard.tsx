@@ -1,8 +1,8 @@
 import { useWindowWidth } from "../contexts/WindowWidthProvider";
 import { Theme } from "../lib/enums";
-import backgroundImage from "../assets/images/PokemonCardBackground.jpg";
-import darkBackgroundImage from "../assets/images/PokemonCardBackgroundDark.png";
-import styles from "../styles/components/pokemon-card.module.css";
+import backgroundImage from "../assets/images/digimonCardBackground.jpg";
+import darkBackgroundImage from "../assets/images/digimonCardBackgroundDark.png";
+import styles from "../styles/components/digimon-card.module.css";
 
 interface Props {
   id: number;
@@ -13,7 +13,7 @@ interface Props {
   theme: Theme;
 }
 
-export default function PokemonCard({
+export default function digimonCard({
   id,
   name,
   img,
@@ -25,7 +25,7 @@ export default function PokemonCard({
 
   return (
     <div
-      className={styles["pokemon-card"]}
+      className={styles["digimon-card"]}
       onClick={onClick}
       style={{
         backgroundImage: `url(${
@@ -35,7 +35,7 @@ export default function PokemonCard({
     >
       <div className={styles["card-content"]}>
         <h1>{`${name} #${id}`}</h1>
-        <img alt="pokemon image" src={img} />
+        <img alt="digimon image" src={img} />
 
         {windowWidth > 480 && (
           <div className={styles.attributes}>

@@ -19,7 +19,7 @@ export default function Login() {
     <div className={styles["form-wrapper"]}>
       <form onSubmit={(e) => e.preventDefault()}>
         <img src={loginImage.src} alt="log-in" />
-        {windowWidth >= 480 && <h1>Log in to your pokemon account</h1>}
+        {windowWidth >= 480 && <h1>Log in to your digimon account</h1>}
 
         <section className={styles["user-data"]}>
           <label htmlFor="username-input">

@@ -7,7 +7,7 @@ import VerticalDivider from "./VerticalDivider";
 import Modal from "./Modal";
 import Setting from "./Setting";
 import Link from "next/link";
-import pokemonLogo from "../assets/images/pokemon-logo.png";
+import digimonLogo from "../assets/images/digimon-logo.png";
 import settingsIcon from "../assets/images/settings.png";
 import settingsIconDark from "../assets/images/settingsDark.png";
 import styles from "../styles/components/header.module.css";
@@ -62,7 +62,7 @@ export default function Header({
     <>
       <header className={styles.header}>
         <div className={styles.left}>
-          <img src={pokemonLogo.src} alt={"pokemon-logo"} />
+          <img src={digimonLogo.src} alt={"digimon-logo"} />
           <p>Pok`emon</p>
           {username && (
             <>

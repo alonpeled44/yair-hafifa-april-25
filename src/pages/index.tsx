@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Theme } from "../lib/enums";
-import usePokemon from "../hooks/usePokemon";
+import usedigimon from "../hooks/useDigimon";
 import Modal from "../components/Modal";
 import Select from "../components/Select";
-import PokemonCard from "../components/PokemonCard";
-import { Pokemon } from "../lib/types";
+import DigimonCard from "../components/DigimonCard";
+import { digimon } from "../lib/types";
 import backgroundImage from "../assets/images/charmander.jpg";
 import darkBackgroundImage from "../assets/images/charmanderDark.jpg";
 import infoCard from "../assets/images/infoCard.png";
@@ -16,29 +16,29 @@ interface Props {
   theme: Theme;
 }
 
-type PokemonKey = keyof Pokemon;
+type digimonKey = keyof digimon;
 
 export default function Home({ theme }: Props) {
-  const { getPokemons, getTypes } = usePokemon();
+  const { getdigimons, getTypes } = usedigimon();
 
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
+  const [digimons, setdigimons] = useState<digimon[]>([]);
+  const [selecteddigimon, setSelecteddigimon] = useState<digimon | null>(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isShiny, setIsShiny] = useState(false);
 
   const [searchText, setSearchText] = useState("");
-  const [attributeSort, setAttributeSort] = useState<PokemonKey>("id");
+  const [attributeSort, setAttributeSort] = useState<digimonKey>("id");
 
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [types, setTypes] = useState<string[]>([]);
 
   useEffect(() => {
     async function init() {
-      const pokemons = await getPokemons();
+      const digimons = await getdigimons();
       const types = await getTypes();
 
-      setPokemons(pokemons || []);
+      setdigimons(digimons || []);
       setTypes(types || []);
     }
     init();
@@ -46,11 +46,11 @@ export default function Home({ theme }: Props) {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
-    setSelectedPokemon(null);
+    setSelecteddigimon(null);
     setIsShiny(false);
   };
 
-  if (!pokemons || pokemons.length === 0) {
+  if (!digimons || digimons.length === 0) {
     return (
       <div
         className={styles["pokedex-wrapper"]}
@@ -74,8 +74,8 @@ export default function Home({ theme }: Props) {
         })`,
       }}
     >
-      <div className={styles["pokemon-cards-container"]}>
-        <section className={styles["pokemon-card-organizer"]}>
+      <div className={styles["digimon-cards-container"]}>
+        <section className={styles["digimon-card-organizer"]}>
           <input
             type="text"
             placeholder="Search digimon"
@@ -103,23 +103,23 @@ export default function Home({ theme }: Props) {
         </section>
 
         <section className={styles.cards}>
-          {pokemons
-            .filter((pokemon) => {
+          {digimons
+            .filter((digimon) => {
               const matchesSearch =
                 (searchText.includes("#") &&
-                  pokemon.id.toString() ===
+                  digimon.id.toString() ===
                     searchText.trim().replace("#", "")) ||
-                pokemon.name
+                digimon.name
                   .toLowerCase()
                   .includes(searchText.trim().toLowerCase());
 
               const matchesTypes =
                 selectedTypes.length === 0 ||
-                pokemon.types.some((t) => selectedTypes.includes(t));
+                digimon.types.some((t) => selectedTypes.includes(t));
 
               return matchesSearch && matchesTypes;
             })
-            .sort((a: Pokemon, b: Pokemon) => {
+            .sort((a: digimon, b: digimon) => {
               if (attributeSort === "name") {
                 return a.name.localeCompare(b.name);
               } else {
@@ -128,16 +128,16 @@ export default function Home({ theme }: Props) {
                 );
               }
             })
-            .map((pokemon) => (
-              <PokemonCard
-                key={pokemon.id}
-                id={pokemon.id}
-                name={pokemon.name}
-                img={pokemon.frontViewImageUrl}
-                types={pokemon.types}
+            .map((digimon) => (
+              <DigimonCard
+                key={digimon.id}
+                id={digimon.id}
+                name={digimon.name}
+                img={digimon.frontViewImageUrl}
+                types={digimon.types}
                 theme={theme}
                 onClick={() => {
-                  setSelectedPokemon(pokemon);
+                  setSelecteddigimon(digimon);
                   setIsModalOpen(true);
                 }}
               />
@@ -145,7 +145,7 @@ export default function Home({ theme }: Props) {
         </section>
       </div>
 
-      {isModalOpen && selectedPokemon && (
+      {isModalOpen && selecteddigimon && (
         <Modal isOpen={isModalOpen} handleClose={handleModalClose}>
           <div
             className={styles["modal-content-wrapper"]}
@@ -156,7 +156,7 @@ export default function Home({ theme }: Props) {
             }}
           >
             <div className={styles["modal-header"]}>
-              <p id={styles["pokemon-name"]}>{selectedPokemon.name}</p>
+              <p id={styles["digimon-name"]}>{selecteddigimon.name}</p>
 
               <label htmlFor="shiny">
                 <input
@@ -167,7 +167,7 @@ export default function Home({ theme }: Props) {
                 variant
               </label>
 
-              <p>#{selectedPokemon.id}</p>
+              <p>#{selecteddigimon.id}</p>
             </div>
 
             <div className={styles["modal-main"]}>
@@ -175,23 +175,23 @@ export default function Home({ theme }: Props) {
                 <img
                   src={
                     isShiny
-                      ? selectedPokemon.frontShinyViewImageUrl
-                      : selectedPokemon.frontViewImageUrl
+                      ? selecteddigimon.frontShinyViewImageUrl
+                      : selecteddigimon.frontViewImageUrl
                   }
-                  alt={`${selectedPokemon.name} front`}
+                  alt={`${selecteddigimon.name} front`}
                 />
                 <img
                   src={
                     isShiny
-                      ? selectedPokemon.backShinyViewImageUrl
-                      : selectedPokemon.backViewImageUrl
+                      ? selecteddigimon.backShinyViewImageUrl
+                      : selecteddigimon.backViewImageUrl
                   }
-                  alt={`${selectedPokemon.name} back`}
+                  alt={`${selecteddigimon.name} back`}
                 />
               </section>
 
-              <section className={styles["pokemon-data"]}>
-                <p>type: {selectedPokemon.types.join(", ")}</p>
+              <section className={styles["digimon-data"]}>
+                <p>type: {selecteddigimon.types.join(", ")}</p>
               </section>
             </div>
           </div>

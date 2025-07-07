@@ -55,7 +55,7 @@ export default async function handler(
       };
     });
 
-    return res.status(200).json({ pokemons: digimons });
+    return res.status(200).json({ digimons: digimons });
   } catch (error) {
     return console.error(error);
   }

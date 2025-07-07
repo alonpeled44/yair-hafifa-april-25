@@ -1,4 +1,4 @@
-.pokemon-card {
+.digimon-card {
   width: 200px;
   height: 300px;
 
@@ -10,7 +10,7 @@
 
   cursor: pointer;
 
-  background-image: url("../../assets/images/PokemonCardBackground.jpg");
+  background-image: url("../../assets/images/digimonCardBackground.jpg");
 
   .card-content {
     width: 100%;
@@ -33,7 +33,7 @@
 }
 
 @media only screen and (max-width: 480px) {
-  .pokemon-card {
+  .digimon-card {
     width: 110px;
     height: 200px;
 
