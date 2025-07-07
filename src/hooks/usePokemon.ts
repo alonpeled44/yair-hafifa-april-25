@@ -16,7 +16,6 @@ export default function usePokemon() {
       }
 
       const data = await response.json();
-      console.log("API response:", data);
 
       const pokemons: Pokemon[] = data.pokemons;
       setPokemonsCache(pokemons);
@@ -31,40 +30,35 @@ export default function usePokemon() {
   async function getTypes() {
     if (typesCache) return typesCache;
 
-    try {
-      const digimonTypes = [
-        "Fresh",
-        "In-Training",
-        "Rookie",
-        "Champion",
-        "Ultimate",
-        "Mega",
-        "Child",
-        "Adult",
-        "Perfect",
-        "Vaccine",
-        "Data",
-        "Virus",
-        "Free",
-        "Unknown",
-        "Reptile",
-        "Beast",
-        "Bird",
-        "Insect",
-        "Machine",
-        "Dragon",
-        "Holy",
-        "Dark",
-        "Plant",
-        "Aquatic",
-      ];
+    const digimonTypes = [
+      "Fresh",
+      "In-Training",
+      "Rookie",
+      "Champion",
+      "Ultimate",
+      "Mega",
+      "Child",
+      "Adult",
+      "Perfect",
+      "Vaccine",
+      "Data",
+      "Virus",
+      "Free",
+      "Unknown",
+      "Reptile",
+      "Beast",
+      "Bird",
+      "Insect",
+      "Machine",
+      "Dragon",
+      "Holy",
+      "Dark",
+      "Plant",
+      "Aquatic",
+    ];
 
-      setTypesCache(digimonTypes);
-      return digimonTypes;
-    } catch (error) {
-      console.error("Error in getTypes:", error);
-      return [];
-    }
+    setTypesCache(digimonTypes);
+    return digimonTypes;
   }
 
   return { getPokemons, getTypes };

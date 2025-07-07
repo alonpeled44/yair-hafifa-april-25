@@ -1,16 +1,15 @@
 import { useState, useEffect } from "react";
-import { Pokemon } from "../lib/types";
 import { Theme } from "../lib/enums";
 import usePokemon from "../hooks/usePokemon";
 import Modal from "../components/Modal";
 import Select from "../components/Select";
 import PokemonCard from "../components/PokemonCard";
+import { Pokemon } from "../lib/types";
 import backgroundImage from "../assets/images/charmander.jpg";
 import darkBackgroundImage from "../assets/images/charmanderDark.jpg";
 import infoCard from "../assets/images/infoCard.png";
 import infoCardDark from "../assets/images/infoCardDark.png";
 import styles from "../styles/pages/index.module.css";
-
 const attributes = ["id", "name"] as string[];
 
 interface Props {

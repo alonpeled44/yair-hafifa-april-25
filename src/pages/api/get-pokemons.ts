@@ -1,31 +1,46 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+type DigimonBasic = {
+  id: number;
+  name: string;
+};
+
+type DigimonDetailed = {
+  id: number;
+  name: string;
+  images: { href: string }[];
+  types: { type: string }[];
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   try {
-    const individualPromises = [];
+    const listResponse = await fetch(
+      "https://digi-api.com/api/v1/digimon?pageSize=100"
+    );
+    const listData = await listResponse.json();
 
-    for (let i = 1; i <= 100; i++) {
-      individualPromises.push(
-        fetch(`https://digi-api.com/api/v1/digimon/${i}`)
-          .then((res) => (res.ok ? res.json() : null))
-          .catch(() => null)
-      );
-    }
+    const digimonList: DigimonBasic[] = listData.content as DigimonBasic[];
 
-    const responses = await Promise.all(individualPromises);
-    const allDigimons = responses.filter((digimon) => digimon !== null);
+    const detailPromises = digimonList.map((digimon) =>
+      fetch(`https://digi-api.com/api/v1/digimon/${digimon.id}`)
+        .then((res) => (res.ok ? res.json() : null))
+        .catch(() => null)
+    );
 
-    const pokemons = allDigimons.map((digimon, index) => {
+    const detailedDigimons = await Promise.all(detailPromises);
+    const validDigimons = detailedDigimons.filter(Boolean) as DigimonDetailed[];
+
+    const digimons = validDigimons.map((digimon, index) => {
       const imageUrl =
         digimon.images?.[0]?.href ||
         "https://via.placeholder.com/300x300?text=Digimon";
 
       const types =
         Array.isArray(digimon.types) && digimon.types.length > 0
-          ? digimon.types.map((t: { type: string }) => t.type)
+          ? digimon.types.map((t) => t.type)
           : ["unknown"];
 
       return {
@@ -40,8 +55,8 @@ export default async function handler(
       };
     });
 
-    return res.status(200).json({ pokemons });
+    return res.status(200).json({ pokemons: digimons });
   } catch (error) {
-    return res.status(500).json({ error: "Failed to fetch digimons." });
+    return console.error(error);
   }
 }

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
-import WindowWidthProvider from "../contexts/WindowWidthProvider";
 import { users } from "../lib/users";
-import Header from "../components/header";
 import { Theme, FontSize } from "../lib/enums";
+import Header from "../components/header";
+import WindowWidthProvider from "../contexts/WindowWidthProvider";
 import "../styles/globals.css";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -57,6 +57,7 @@ export default function App({ Component, pageProps }: AppProps) {
         font={font}
         setFont={setFont}
       />
+
       <main>
         <Component {...pageProps} theme={theme} />
       </main>
