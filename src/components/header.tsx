@@ -26,9 +26,9 @@ const themes: Record<Theme, string> = {
 };
 
 const fonts: Record<FontSize, string> = {
-  small: "🗛",
-  medium: "🗛",
-  large: "🗛",
+  small: "Aa",
+  medium: "Aa",
+  large: "Aa",
 };
 
 const fontSizes: FontSize[] = Object.values(FontSize);
