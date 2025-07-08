@@ -1,5 +1,13 @@
 import RadioOption from "./RadioOption";
-import styles from "@/styles/components/setting.module.css";
+import styles from "../styles/components/setting.module.css";
+
+interface Props {
+  title: string;
+  options: string[];
+  groupName: string;
+  selected: string;
+  onClick: (value: string) => void;
+}
 
 export default function Setting({
   title,
@@ -7,7 +15,7 @@ export default function Setting({
   groupName,
   selected,
   onClick,
-}) {
+}: Props) {
   return (
     <div className={styles["setting-wrapper"]}>
       <h1>{title}:</h1>

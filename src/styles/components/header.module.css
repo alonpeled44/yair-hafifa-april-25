@@ -34,7 +34,7 @@
     }
 
     & p {
-      font-family: pokemon-font;
+      font-family: digimon-font;
     }
 
     & .left-items {
@@ -155,11 +155,10 @@
 
   & .font-sizes {
     position: absolute;
-    right: 100%;
+    right: 95%;
     bottom: 0;
 
     display: flex;
-    gap: 20px;
 
     padding-bottom: 16px;
 

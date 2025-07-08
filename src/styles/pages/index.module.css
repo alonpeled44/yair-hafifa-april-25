@@ -6,7 +6,13 @@
 
   padding-inline: 15%;
 
-  & .pokemon-cards-container {
+  .loading {
+    padding: 20px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+  }
+
+  & .digimon-cards-container {
     width: 0px;
     flex: 1 1 auto;
 
@@ -16,7 +22,7 @@
 
     padding-top: 60px;
 
-    & .pokemon-card-organizer {
+    & .digimon-card-organizer {
       width: 100%;
       height: 5%;
 
@@ -126,7 +132,7 @@
 
       padding-inline: 10%;
 
-      & #pokemon-name {
+      & #digimon-name {
         margin-right: auto;
       }
 
@@ -172,8 +178,8 @@
   .pokedex-wrapper {
     padding: 5px;
 
-    & .pokemon-cards-container {
-      & .pokemon-card-organizer {
+    & .digimon-cards-container {
+      & .digimon-card-organizer {
         justify-content: space-around;
 
         & .search-bar {
@@ -211,7 +217,7 @@
           width: 150px;
         }
 
-        & .pokemon-data {
+        & .digimon-data {
           height: 100%;
 
           display: flex;

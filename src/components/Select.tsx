@@ -1,26 +1,45 @@
 import { useEffect, useRef, useState } from "react";
-import styles from "@/styles/components/select.module.css";
+import styles from "../styles/components/select.module.css";
 
-export default function Select({
+type SetStateType<T> = React.Dispatch<React.SetStateAction<T>>;
+
+type Props<T extends string | string[]> = {
+  multiple: boolean;
+  options: string[];
+  checkedOptions: T;
+  setCheckedOptions: SetStateType<T>;
+};
+
+export default function Select<T extends string | string[]>({
   multiple,
   options = [],
   checkedOptions,
   setCheckedOptions,
-}) {
+}: Props<T>) {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  const handleCheckboxChange = (option) => {
-    setCheckedOptions((prevCheckedOptions) =>
-      prevCheckedOptions.includes(option)
-        ? prevCheckedOptions.filter((type) => type !== option)
-        : [...prevCheckedOptions, option]
-    );
+  const handleCheckboxChange = (option: string) => {
+    if (multiple) {
+      setCheckedOptions((prevCheckedOptions) => {
+        const prev = prevCheckedOptions as string[];
+        if (prev.includes(option)) {
+          return prev.filter((o) => o !== option) as T;
+        } else {
+          return [...prev, option] as T;
+        }
+      });
+    } else {
+      setCheckedOptions(option as T);
+    }
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -54,8 +73,11 @@ export default function Select({
                   type="button"
                   key={index}
                   value={option}
-                  onClick={(e) => {
-                    setCheckedOptions(e.target.value);
+                  onClick={(e: React.MouseEvent<HTMLInputElement>) => {
+                    if (!e.target) return;
+                    const target = e.currentTarget.value as T;
+
+                    setCheckedOptions(target);
                   }}
                 />
               )}
