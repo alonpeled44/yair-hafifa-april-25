@@ -22,7 +22,7 @@ export default function useDigimon() {
 
       return digimons;
     } catch (error) {
-      console.error("Error in getdigimons:", error);
+      console.error("Error in getDigimons:", error);
       return [];
     }
   }

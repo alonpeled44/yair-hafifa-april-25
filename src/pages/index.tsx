@@ -61,7 +61,7 @@ export default function Home({ theme }: Props) {
           })`,
         }}
       >
-        <div className={styles.loading}>Loading Digimons...</div>
+        <p className={styles.loading}>Loading Digimons...</p>
       </div>
     );
   }
