@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { useWindowWidth } from "../contexts/WindowWidthProvider";
 import { Theme, FontSize } from "../lib/enums";
 import VerticalDivider from "./VerticalDivider";
 import Modal from "./Modal";
 import Setting from "./Setting";
-import Link from "next/link";
 import digimonLogo from "../assets/images/digimon-logo.png";
 import settingsIcon from "../assets/images/settings.png";
 import settingsIconDark from "../assets/images/settingsDark.png";
@@ -20,7 +20,7 @@ interface Props {
   setFont: (font: FontSize) => void;
 }
 
-const lightmodes: Record<Theme, string> = {
+const themes: Record<Theme, string> = {
   light: "☀️",
   dark: "🌙",
 };
@@ -105,7 +105,7 @@ export default function Header({
                   setTheme(theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT)
                 }
               >
-                {lightmodes[theme]}
+                {themes[theme]}
               </button>
               <button
                 onClick={() => {
@@ -147,7 +147,7 @@ export default function Header({
             <Setting
               title="Theme"
               groupName="themes"
-              options={Object.keys(lightmodes)}
+              options={Object.keys(themes)}
               selected={theme}
               onClick={(value: string) => setTheme(value as Theme)}
             />

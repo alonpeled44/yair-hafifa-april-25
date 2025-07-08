@@ -1,4 +1,4 @@
-export type digimon = {
+export type Digimon = {
   id: number;
   name: string;
   weight: number;

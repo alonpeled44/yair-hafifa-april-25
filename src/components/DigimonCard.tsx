@@ -13,7 +13,7 @@ interface Props {
   theme: Theme;
 }
 
-export default function digimonCard({
+export default function DigimonCard({
   id,
   name,
   img,

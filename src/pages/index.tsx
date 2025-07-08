@@ -1,44 +1,45 @@
 import { useState, useEffect } from "react";
 import { Theme } from "../lib/enums";
-import usedigimon from "../hooks/useDigimon";
+import { Digimon } from "../lib/types";
+import useDigimon from "../hooks/useDigimon";
 import Modal from "../components/Modal";
 import Select from "../components/Select";
 import DigimonCard from "../components/DigimonCard";
-import { digimon } from "../lib/types";
 import backgroundImage from "../assets/images/charmander.jpg";
 import darkBackgroundImage from "../assets/images/charmanderDark.jpg";
 import infoCard from "../assets/images/infoCard.png";
 import infoCardDark from "../assets/images/infoCardDark.png";
 import styles from "../styles/pages/index.module.css";
+
 const attributes = ["id", "name"] as string[];
 
 interface Props {
   theme: Theme;
 }
 
-type digimonKey = keyof digimon;
+type DigimonKey = keyof Digimon;
 
 export default function Home({ theme }: Props) {
-  const { getdigimons, getTypes } = usedigimon();
+  const { getDigimons, getTypes } = useDigimon();
 
-  const [digimons, setdigimons] = useState<digimon[]>([]);
-  const [selecteddigimon, setSelecteddigimon] = useState<digimon | null>(null);
+  const [digimons, setDigimons] = useState<Digimon[]>([]);
+  const [selectedDigimon, setSelectedDigimon] = useState<Digimon | null>(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isShiny, setIsShiny] = useState(false);
 
   const [searchText, setSearchText] = useState("");
-  const [attributeSort, setAttributeSort] = useState<digimonKey>("id");
+  const [attributeSort, setAttributeSort] = useState<DigimonKey>("id");
 
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [types, setTypes] = useState<string[]>([]);
 
   useEffect(() => {
     async function init() {
-      const digimons = await getdigimons();
+      const digimons = await getDigimons();
       const types = await getTypes();
 
-      setdigimons(digimons || []);
+      setDigimons(digimons || []);
       setTypes(types || []);
     }
     init();
@@ -46,7 +47,7 @@ export default function Home({ theme }: Props) {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
-    setSelecteddigimon(null);
+    setSelectedDigimon(null);
     setIsShiny(false);
   };
 
@@ -119,7 +120,7 @@ export default function Home({ theme }: Props) {
 
               return matchesSearch && matchesTypes;
             })
-            .sort((a: digimon, b: digimon) => {
+            .sort((a: Digimon, b: Digimon) => {
               if (attributeSort === "name") {
                 return a.name.localeCompare(b.name);
               } else {
@@ -137,7 +138,7 @@ export default function Home({ theme }: Props) {
                 types={digimon.types}
                 theme={theme}
                 onClick={() => {
-                  setSelecteddigimon(digimon);
+                  setSelectedDigimon(digimon);
                   setIsModalOpen(true);
                 }}
               />
@@ -145,7 +146,7 @@ export default function Home({ theme }: Props) {
         </section>
       </div>
 
-      {isModalOpen && selecteddigimon && (
+      {isModalOpen && selectedDigimon && (
         <Modal isOpen={isModalOpen} handleClose={handleModalClose}>
           <div
             className={styles["modal-content-wrapper"]}
@@ -156,7 +157,7 @@ export default function Home({ theme }: Props) {
             }}
           >
             <div className={styles["modal-header"]}>
-              <p id={styles["digimon-name"]}>{selecteddigimon.name}</p>
+              <p id={styles["digimon-name"]}>{selectedDigimon.name}</p>
 
               <label htmlFor="shiny">
                 <input
@@ -167,7 +168,7 @@ export default function Home({ theme }: Props) {
                 variant
               </label>
 
-              <p>#{selecteddigimon.id}</p>
+              <p>#{selectedDigimon.id}</p>
             </div>
 
             <div className={styles["modal-main"]}>
@@ -175,23 +176,23 @@ export default function Home({ theme }: Props) {
                 <img
                   src={
                     isShiny
-                      ? selecteddigimon.frontShinyViewImageUrl
-                      : selecteddigimon.frontViewImageUrl
+                      ? selectedDigimon.frontShinyViewImageUrl
+                      : selectedDigimon.frontViewImageUrl
                   }
-                  alt={`${selecteddigimon.name} front`}
+                  alt={`${selectedDigimon.name} front`}
                 />
                 <img
                   src={
                     isShiny
-                      ? selecteddigimon.backShinyViewImageUrl
-                      : selecteddigimon.backViewImageUrl
+                      ? selectedDigimon.backShinyViewImageUrl
+                      : selectedDigimon.backViewImageUrl
                   }
-                  alt={`${selecteddigimon.name} back`}
+                  alt={`${selectedDigimon.name} back`}
                 />
               </section>
 
               <section className={styles["digimon-data"]}>
-                <p>type: {selecteddigimon.types.join(", ")}</p>
+                <p>type: {selectedDigimon.types.join(", ")}</p>
               </section>
             </div>
           </div>

@@ -22,7 +22,7 @@ export default async function handler(
     );
     const listData = await listResponse.json();
 
-    const digimonList: DigimonBasic[] = listData.content as DigimonBasic[];
+    const digimonList = listData.content as DigimonBasic[];
 
     const detailPromises = digimonList.map((digimon) =>
       fetch(`https://digi-api.com/api/v1/digimon/${digimon.id}`)

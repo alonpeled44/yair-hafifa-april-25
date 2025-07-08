@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { digimon } from "../lib/types";
+import { Digimon } from "../lib/types";
 
-export default function usedigimon() {
+export default function useDigimon() {
   const [typesCache, setTypesCache] = useState<string[] | null>(null);
-  const [digimonsCache, setdigimonsCache] = useState<digimon[] | null>(null);
+  const [digimonsCache, setDigimonsCache] = useState<Digimon[] | null>(null);
 
-  async function getdigimons() {
+  async function getDigimons() {
     if (digimonsCache) return digimonsCache;
 
     try {
-      const response = await fetch("/api/get-digimons", {});
+      const response = await fetch("/api/get-digimons");
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -17,8 +17,8 @@ export default function usedigimon() {
 
       const data = await response.json();
 
-      const digimons: digimon[] = data.digimons;
-      setdigimonsCache(digimons);
+      const digimons: Digimon[] = data.digimons;
+      setDigimonsCache(digimons);
 
       return digimons;
     } catch (error) {
@@ -61,5 +61,5 @@ export default function usedigimon() {
     return digimonTypes;
   }
 
-  return { getdigimons, getTypes };
+  return { getDigimons, getTypes };
 }

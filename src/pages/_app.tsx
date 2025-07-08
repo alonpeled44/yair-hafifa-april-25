@@ -3,9 +3,10 @@ import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 import { users } from "../lib/users";
 import { Theme, FontSize } from "../lib/enums";
-import Header from "../components/header";
 import WindowWidthProvider from "../contexts/WindowWidthProvider";
+import Header from "../components/header";
 import "../styles/globals.css";
+import { Font } from "next/dist/compiled/@vercel/og/satori";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState<Theme>(Theme.LIGHT);
@@ -21,12 +22,8 @@ export default function App({ Component, pageProps }: AppProps) {
     }
 
     const storedFont = localStorage.getItem("font");
-    if (
-      storedFont === FontSize.SMALL ||
-      storedFont === FontSize.MEDIUM ||
-      storedFont === FontSize.LARGE
-    ) {
-      setFont(storedFont);
+    if (FontSize[storedFont as keyof typeof FontSize]) {
+      setFont(storedFont as FontSize);
     }
 
     const savedUsername = localStorage.getItem("username");
@@ -34,8 +31,7 @@ export default function App({ Component, pageProps }: AppProps) {
       ({ userName }) => userName === savedUsername
     );
 
-    if (currentUser || savedUsername === "Guest") router.push("/");
-    else router.push(newUsersDefaultPage);
+    router.push(currentUser || savedUsername === "Guest" ? "/" : "/login");
   }, []);
 
   useEffect(() => {
