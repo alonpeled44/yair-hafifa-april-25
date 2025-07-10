@@ -11,7 +11,7 @@ import infoCard from "../assets/images/infoCard.png";
 import infoCardDark from "../assets/images/infoCardDark.png";
 import styles from "../styles/pages/index.module.css";
 
-const attributes = ["id", "name"] as string[];
+const attributes = ["id", "name"];
 
 interface Props {
   theme: Theme;

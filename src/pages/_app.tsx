@@ -6,7 +6,6 @@ import { Theme, FontSize } from "../lib/enums";
 import WindowWidthProvider from "../contexts/WindowWidthProvider";
 import Header from "../components/header";
 import "../styles/globals.css";
-import { Font } from "next/dist/compiled/@vercel/og/satori";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState<Theme>(Theme.LIGHT);
