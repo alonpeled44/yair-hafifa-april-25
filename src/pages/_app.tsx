@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import type { AppProps } from "next/app";
-import { users } from "../lib/users";
 import { Theme, FontSize } from "../lib/enums";
 import WindowWidthProvider from "../contexts/WindowWidthProvider";
 import Header from "../components/header";
@@ -11,27 +11,32 @@ export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState<Theme>(Theme.LIGHT);
   const [font, setFont] = useState<FontSize>(FontSize.MEDIUM);
 
+  const pathname = usePathname();
+
   const router = useRouter();
   const newUsersDefaultPage = "/login";
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === Theme.DARK || storedTheme === Theme.LIGHT) {
-      setTheme(storedTheme);
+    if (storedTheme === Theme.DARK) {
+      setTheme(Theme.DARK);
+    } else {
+      setTheme(Theme.LIGHT);
     }
 
     const storedFont = localStorage.getItem("font");
-    if (FontSize[storedFont as keyof typeof FontSize]) {
-      setFont(storedFont as FontSize);
+    if (storedFont === "small") {
+      setFont(FontSize.SMALL);
+    } else if (storedFont === "large") {
+      setFont(FontSize.LARGE);
+    } else {
+      setFont(FontSize.MEDIUM);
     }
 
-    const savedUsername = localStorage.getItem("username");
-    const currentUser = users.find(
-      ({ userName }) => userName === savedUsername
-    );
-
-    router.push(currentUser || savedUsername === "Guest" ? "/" : "/login");
-  }, []);
+    if (localStorage.getItem("username") === null) {
+      router.push("/login");
+    }
+  }, [pathname]);
 
   useEffect(() => {
     document.body.classList.remove("light", "dark");

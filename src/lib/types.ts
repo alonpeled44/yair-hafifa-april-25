@@ -1,3 +1,5 @@
+import { Theme } from "../lib/enums";
+
 export type Digimon = {
   id: number;
   name: string;
@@ -8,4 +10,11 @@ export type Digimon = {
   backViewImageUrl: string;
   frontShinyViewImageUrl: string;
   backShinyViewImageUrl: string;
+};
+
+export type User = {
+  id: number;
+  name: string;
+  theme: Theme;
+  fontSize: string;
 };
