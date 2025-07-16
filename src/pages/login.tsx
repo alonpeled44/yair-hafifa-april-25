@@ -1,19 +1,43 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useWindowWidth } from "../contexts/WindowWidthProvider";
-import { users } from "../lib/users";
+import { Theme, FontSize } from "../lib/enums";
+import useUser from "../hooks/useUser";
 import loginImage from "../assets/images/login-image.png";
 import styles from "../styles/pages/login.module.css";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const windowWidth = useWindowWidth();
+  const [theme, setTheme] = useState(Theme.LIGHT);
+  const [fontSize, setfontSize] = useState(FontSize.MEDIUM);
+  const { getUser } = useUser();
 
   const [loginError, setLoginError] = useState("");
 
+  const windowWidth = useWindowWidth();
   const router = useRouter();
+
+  const handleLogin = async () => {
+    try {
+      const user = await getUser(username, password);
+
+      if (user) {
+        localStorage.setItem("username", user.username);
+        localStorage.setItem("password", user.password);
+        localStorage.setItem("theme", user.theme);
+        localStorage.setItem("font", user.fontSize);
+
+        setLoginError("");
+        router.push("/");
+      } else {
+        setLoginError("Invalid username or password");
+      }
+    } catch (err) {
+      setLoginError("Something went wrong. Try again later.");
+      console.error("Login error:", err);
+    }
+  };
 
   return (
     <div className={styles["form-wrapper"]}>
@@ -40,9 +64,7 @@ export default function Login() {
             Password
             <input
               value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              onChange={(e) => setPassword(e.target.value)}
               type="password"
               id="password-input"
               required
@@ -52,47 +74,13 @@ export default function Login() {
         </section>
 
         <div className={styles.buttons}>
-          <button
-            type="submit"
-            name="input-text"
-            onClick={() => {
-              if (!username) {
-                setLoginError("No username inserted");
-                return;
-              }
-
-              if (!password) {
-                setLoginError("No password inserted");
-                return;
-              }
-
-              const currentUser = users.find(
-                ({ userName }) => userName === username
-              );
-              if (!currentUser) {
-                setLoginError("Couldn't find username, try a different one");
-                return;
-              }
-
-              if (password !== currentUser.password) {
-                setLoginError("Username and password do not match");
-                return;
-              }
-
-              setLoginError("");
-
-              localStorage.setItem("username", currentUser.userName);
-              router.push("/");
-            }}
-          >
+          <button type="submit" onClick={handleLogin}>
             Log in
           </button>
           <button
             type="submit"
-            name="input-text"
             onClick={() => {
               setLoginError("");
-
               localStorage.setItem("username", "Guest");
               router.push("/");
             }}

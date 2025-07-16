@@ -3,7 +3,7 @@ import styles from "../styles/components/setting.module.css";
 
 interface Props {
   title: string;
-  options: string[];
+  options: { value: string; icon: string }[];
   groupName: string;
   selected: string;
   onClick: (value: string) => void;
@@ -21,14 +21,14 @@ export default function Setting({
       <h1>{title}:</h1>
 
       <div className={styles["radio-options"]}>
-        {Object.entries(options).map(([key, value], index) => (
+        {options.map(({ value, icon }) => (
           <RadioOption
-            key={index}
-            text={value}
-            value={key}
+            key={value}
+            text={icon}
+            value={value}
             groupName={groupName}
-            isSelected={selected === key}
-            onClick={() => onClick(key)}
+            isSelected={selected === value}
+            onClick={() => onClick(value)}
           />
         ))}
       </div>

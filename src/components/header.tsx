@@ -3,6 +3,7 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useWindowWidth } from "../contexts/WindowWidthProvider";
+import useUser from "../hooks/useUser";
 import { Theme, FontSize } from "../lib/enums";
 import VerticalDivider from "./VerticalDivider";
 import Modal from "./Modal";
@@ -42,21 +43,23 @@ export default function Header({
 }: Props) {
   const [username, setUsername] = useState<string | null>("");
   const [isFontExtensionOpen, setIsFontExtensionOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { setUser } = useUser();
 
   const windowWidth = useWindowWidth();
   const pathname = usePathname();
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
-
-  function handleFontSizeSelection(newFontSize: FontSize) {
-    setFont(newFontSize);
-    setIsFontExtensionOpen(false);
-  }
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     setUsername(storedUsername);
   }, [pathname]);
+
+  function handleFontSizeSelection(newFontSize: FontSize) {
+    setFont(newFontSize);
+    setUser({ fontSize: newFontSize });
+    setIsFontExtensionOpen(false);
+  }
 
   return (
     <>
@@ -72,6 +75,9 @@ export default function Header({
                 <button
                   onClick={() => {
                     localStorage.removeItem("username");
+                    localStorage.removeItem("password");
+                    localStorage.removeItem("theme");
+                    localStorage.removeItem("font");
                     router.push(newUsersDefaultPage);
                   }}
                 >
@@ -101,9 +107,12 @@ export default function Header({
           {isModalOpen && windowWidth <= 480 && (
             <div className={styles["settings-dropdown"]}>
               <button
-                onClick={() =>
-                  setTheme(theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT)
-                }
+                onClick={() => {
+                  const newTheme =
+                    theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT;
+                  setTheme(newTheme);
+                  setUser({ theme: newTheme });
+                }}
               >
                 {themes[theme]}
               </button>
@@ -137,26 +146,35 @@ export default function Header({
       </header>
 
       {isModalOpen && windowWidth > 480 && (
-        <Modal
-          isOpen={isModalOpen}
-          handleClose={() => {
-            setIsModalOpen(false);
-          }}
-        >
+        <Modal isOpen={isModalOpen} handleClose={() => setIsModalOpen(false)}>
           <div className={styles["modal-content-wrapper"]}>
             <Setting
               title="Theme"
               groupName="themes"
-              options={Object.keys(themes)}
+              options={Object.entries(themes).map(([value, icon]) => ({
+                value,
+                icon,
+              }))}
               selected={theme}
-              onClick={(value: string) => setTheme(value as Theme)}
+              onClick={(value: string) => {
+                const newTheme = value as Theme;
+                setTheme(newTheme);
+                setUser({ theme: newTheme });
+              }}
             />
             <Setting
               title="Fonts"
               groupName="font-sizes"
-              options={Object.keys(fonts)}
+              options={Object.entries(fonts).map(([value, icon]) => ({
+                value,
+                icon,
+              }))}
               selected={font}
-              onClick={(value: string) => setFont(value as FontSize)}
+              onClick={(value: string) => {
+                const newFont = value as FontSize;
+                setFont(newFont);
+                setUser({ fontSize: newFont });
+              }}
             />
           </div>
         </Modal>
