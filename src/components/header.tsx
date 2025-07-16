@@ -3,6 +3,7 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useWindowWidth } from "../contexts/WindowWidthProvider";
+import useUser from "../hooks/useUser";
 import { Theme, FontSize } from "../lib/enums";
 import VerticalDivider from "./VerticalDivider";
 import Modal from "./Modal";
@@ -43,6 +44,7 @@ export default function Header({
   const [username, setUsername] = useState<string | null>("");
   const [isFontExtensionOpen, setIsFontExtensionOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { setUser } = useUser();
 
   const windowWidth = useWindowWidth();
   const pathname = usePathname();
@@ -53,27 +55,9 @@ export default function Header({
     setUsername(storedUsername);
   }, [pathname]);
 
-  async function updateUserPreferences(changes: {
-    theme?: Theme;
-    fontSize?: FontSize;
-  }) {
-    const username = localStorage.getItem("username");
-    if (!username) return;
-
-    try {
-      await fetch("/api/update", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, ...changes }),
-      });
-    } catch (err) {
-      console.error("Failed to update user preferences", err);
-    }
-  }
-
   function handleFontSizeSelection(newFontSize: FontSize) {
     setFont(newFontSize);
-    updateUserPreferences({ fontSize: newFontSize });
+    setUser({ fontSize: newFontSize });
     setIsFontExtensionOpen(false);
   }
 
@@ -127,7 +111,7 @@ export default function Header({
                   const newTheme =
                     theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT;
                   setTheme(newTheme);
-                  updateUserPreferences({ theme: newTheme });
+                  setUser({ theme: newTheme });
                 }}
               >
                 {themes[theme]}
@@ -175,7 +159,7 @@ export default function Header({
               onClick={(value: string) => {
                 const newTheme = value as Theme;
                 setTheme(newTheme);
-                updateUserPreferences({ theme: newTheme });
+                setUser({ theme: newTheme });
               }}
             />
             <Setting
@@ -189,7 +173,7 @@ export default function Header({
               onClick={(value: string) => {
                 const newFont = value as FontSize;
                 setFont(newFont);
-                updateUserPreferences({ fontSize: newFont });
+                setUser({ fontSize: newFont });
               }}
             />
           </div>

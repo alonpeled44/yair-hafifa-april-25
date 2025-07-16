@@ -18,20 +18,16 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === Theme.DARK) {
-      setTheme(Theme.DARK);
-    } else {
-      setTheme(Theme.LIGHT);
-    }
+    setTheme(() => (storedTheme === Theme.DARK ? Theme.DARK : Theme.LIGHT));
 
     const storedFont = localStorage.getItem("font");
-    if (storedFont === "small") {
-      setFont(FontSize.SMALL);
-    } else if (storedFont === "large") {
-      setFont(FontSize.LARGE);
-    } else {
-      setFont(FontSize.MEDIUM);
-    }
+    setFont(() =>
+      storedFont === "small"
+        ? FontSize.SMALL
+        : storedFont === "large"
+        ? FontSize.LARGE
+        : FontSize.MEDIUM
+    );
 
     if (localStorage.getItem("username") === null) {
       router.push("/login");

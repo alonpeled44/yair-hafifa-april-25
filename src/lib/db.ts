@@ -1,12 +1,12 @@
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
+import path from "path";
 
 sqlite3.verbose();
 
 export async function openDb() {
   return open({
-    filename:
-      "C:\\Users\\328100490\\Documents\\GitHub\\yair-hafifa-april-25\\db.db",
+    filename: path.join(process.cwd(), "db.db"),
     driver: sqlite3.Database,
   });
 }

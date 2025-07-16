@@ -7,7 +7,10 @@ export default async function handler(
 ) {
   const db = await openDb();
 
-  if (req.method === "POST") {
+  if (req.method !== "POST" && req.method !== "GET") {
+    res.setHeader("Allow", ["GET", "POST"]);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
+  } else if (req.method === "POST") {
     const { username, password } = req.body;
 
     if (!username || !password) {
@@ -19,13 +22,13 @@ export default async function handler(
     try {
       const user = await db.get(
         `
-        SELECT username, password, theme, "font-size" as fontSize FROM users WHERE username = ? AND password = ?
+        SELECT username, password, theme, "font-size" AS fontSize FROM users WHERE username = ? AND password = ?
       `,
         [username, password]
       );
 
       if (!user) {
-        return res.status(401).json({ error: "Invalid credentials" + user });
+        return res.status(401).json({ error: "Invalid credentials" });
       }
 
       res.status(200).json(user);
@@ -40,8 +43,5 @@ export default async function handler(
     } catch (err) {
       res.status(500).json({ error: "Failed to fetch users" });
     }
-  } else {
-    res.setHeader("Allow", ["GET", "POST"]);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }

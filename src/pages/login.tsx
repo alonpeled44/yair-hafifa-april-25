@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { useWindowWidth } from "../contexts/WindowWidthProvider";
 import { Theme, FontSize } from "../lib/enums";
+import useUser from "../hooks/useUser";
+import { User } from "../lib/types";
 import loginImage from "../assets/images/login-image.png";
 import styles from "../styles/pages/login.module.css";
 
@@ -10,6 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [theme, setTheme] = useState(Theme.LIGHT);
   const [fontSize, setfontSize] = useState(FontSize.MEDIUM);
+  const { getUser } = useUser();
 
   const [loginError, setLoginError] = useState("");
 
@@ -17,39 +20,20 @@ export default function Login() {
   const router = useRouter();
 
   const handleLogin = async () => {
-    if (!username) {
-      setLoginError("No username inserted");
-      return;
-    }
-
-    if (!password) {
-      setLoginError("No password inserted");
-      return;
-    }
-
     try {
-      const res = await fetch("/api/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
+      const user = await getUser(username, password);
 
-      if (!res.ok) {
-        const data = await res.json();
-        setLoginError(data.error || "Login failed");
-        return;
+      if (user) {
+        localStorage.setItem("username", user.username);
+        localStorage.setItem("password", user.password);
+        localStorage.setItem("theme", user.theme);
+        localStorage.setItem("font", user.fontSize);
+
+        setLoginError("");
+        router.push("/");
+      } else {
+        setLoginError("Invalid username or password");
       }
-
-      const user = await res.json();
-
-      localStorage.setItem("username", user.username);
-      localStorage.setItem("password", user.password);
-      localStorage.setItem("theme", user.theme);
-      localStorage.setItem("font", user.fontSize);
-      console.log(user.fontSize);
-
-      setLoginError("");
-      router.push("/");
     } catch (err) {
       setLoginError("Something went wrong. Try again later.");
       console.error("Login error:", err);

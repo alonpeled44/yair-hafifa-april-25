@@ -14,7 +14,8 @@ export type Digimon = {
 
 export type User = {
   id: number;
-  name: string;
+  username: string;
+  password: string;
   theme: Theme;
   fontSize: string;
 };
