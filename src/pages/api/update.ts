@@ -5,12 +5,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const db = await openDb();
-
   if (req.method !== "PUT") {
     res.setHeader("Allow", ["PUT"]);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
+  const db = await openDb();
   const { username, theme, fontSize } = req.body;
 
   if (!username) {

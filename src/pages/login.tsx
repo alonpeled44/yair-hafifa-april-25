@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useWindowWidth } from "../contexts/WindowWidthProvider";
 import { Theme, FontSize } from "../lib/enums";
 import useUser from "../hooks/useUser";
-import { User } from "../lib/types";
 import loginImage from "../assets/images/login-image.png";
 import styles from "../styles/pages/login.module.css";
 
